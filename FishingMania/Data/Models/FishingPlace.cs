@@ -21,7 +21,7 @@ namespace FishingMania.Data.Models
         [Required]
         [MaxLength(ValidationConstant.PlaceDescriptionMax)]
         public string Description { get; set; } = string.Empty;
-        public decimal Price { get; set; }
+        public double Price { get; set; }
         public string UserId { get; set; }=string.Empty;
         [ForeignKey(nameof(UserId))]
         public IdentityUser User { get; set; } = null!;
@@ -36,7 +36,7 @@ namespace FishingMania.Data.Models
         public Event Events { get; set; } = null!;
         public bool IsDeleted { get; set; }
         public virtual ICollection<ApplicationUserFishingPlace> ApplicationUserProduct { get; set; }
-            = new HashSet<ApplicationUserFishingPlace>();
+            = new List<ApplicationUserFishingPlace>();
 
     }
 }

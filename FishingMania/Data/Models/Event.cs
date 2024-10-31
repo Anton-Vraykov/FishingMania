@@ -12,7 +12,7 @@ namespace FishingMania.Data.Models
         public string Name { get; set; } = string.Empty;
         [Required]
         public string ImageURL { get; set; } = string.Empty;
-        public decimal Price { get; set; }
+        public double Price { get; set; }
         public virtual ICollection<FishingPlace> FishingPlaces { get; set; } = new HashSet<FishingPlace>();
     }
 }

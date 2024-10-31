@@ -11,6 +11,6 @@ namespace FishingMania.Data.Models
 
         public Guid FishingPlaceId { get; set; }
         [ForeignKey(nameof(FishingPlaceId))]
-        public virtual FishingPlace Product { get; set; } = null!;
+        public virtual FishingPlace FishingPlaces { get; set; } = null!;
     }
 }

@@ -29,6 +29,11 @@ namespace FishingMania.Data
                 .WithMany()
                 .HasForeignKey(g => g.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<ApplicationUserFishingPlace>()
+                .HasOne(g => g.ApplicationUser)
+                .WithMany()
+                .HasForeignKey(g => g.ApplicationUserId)
+                .OnDelete(DeleteBehavior.Restrict);
 
 
         }

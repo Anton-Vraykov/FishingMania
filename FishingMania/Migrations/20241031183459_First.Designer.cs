@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FishingMania.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241029190959_one")]
-    partial class one
+    [Migration("20241031183459_First")]
+    partial class First
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,8 +51,8 @@ namespace FishingMania.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
 
                     b.Property<DateTime?>("Rezervation")
                         .HasColumnType("datetime2");
@@ -77,8 +77,8 @@ namespace FishingMania.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -119,8 +119,8 @@ namespace FishingMania.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
 
                     b.Property<DateTime>("Reservation")
                         .HasColumnType("datetime2");
@@ -368,10 +368,10 @@ namespace FishingMania.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "ApplicationUser")
                         .WithMany()
                         .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("FishingMania.Data.Models.FishingPlace", "Product")
+                    b.HasOne("FishingMania.Data.Models.FishingPlace", "FishingPlaces")
                         .WithMany("ApplicationUserProduct")
                         .HasForeignKey("FishingPlaceId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -379,7 +379,7 @@ namespace FishingMania.Migrations
 
                     b.Navigation("ApplicationUser");
 
-                    b.Navigation("Product");
+                    b.Navigation("FishingPlaces");
                 });
 
             modelBuilder.Entity("FishingMania.Data.Models.FishingPlace", b =>
