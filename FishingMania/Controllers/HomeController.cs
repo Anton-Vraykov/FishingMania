@@ -12,7 +12,7 @@ namespace FishingMania.Controllers
         {
             if (User?.Identity?.IsAuthenticated ?? false)
             {
-                return RedirectToAction("Index","FishingPlace");
+                return RedirectToAction("FishingPlace", "FishingPlace");
             }
             return View();
         }

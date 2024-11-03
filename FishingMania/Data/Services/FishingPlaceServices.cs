@@ -1,5 +1,8 @@
 ﻿using FishingMania.Data.Interface;
 using FishingMania.Data.Models;
+using FishingMania.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 namespace FishingMania.Data.Services
 {
@@ -10,10 +13,23 @@ namespace FishingMania.Data.Services
         {
             this.db = db;
         }
-        public void Add(FishingPlace fishingPlace)
+        public async Task AddPlaceAsync(AddPlaceViewModel place, string userId)
         {
-            throw new NotImplementedException();
+          
+            var placeData = new FishingPlace
+            {
+                Name = place.Name,
+                Description = place.Description,
+                PictureURL = place.PictureURL,
+                UserId = userId,
+                TypeFishingId=place.TypeFishingId
+
+            };
+
+            await db.FishingPlaces.AddAsync(placeData);
+            await db.SaveChangesAsync();
         }
+
 
         public void Delete(int Id, int password)
         {
@@ -36,6 +52,23 @@ namespace FishingMania.Data.Services
         public void Update(FishingPlace fishingPlace)
         {
             throw new NotImplementedException();
+        }
+        public async Task<AddPlaceViewModel> GetAddModelAsync()
+        {
+            var fishingTypes = await db.TypesFishings
+                .Select(g => new FishingTypeViewModel
+                {
+                    Id = g.Id,
+                    Name = g.Name
+                })
+                .ToListAsync();
+
+            var model = new AddPlaceViewModel
+            {
+                FishingTypes = fishingTypes
+            };
+
+            return model;
         }
 
     }

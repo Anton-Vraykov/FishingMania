@@ -45,12 +45,24 @@ namespace FishingMania.Controllers
             };
             return View(Model);
         }
+        [HttpGet]
+        public async Task<IActionResult> AddFishingPlace()
+        {
+            AddPlaceViewModel model = await fishingPlaces.GetAddModelAsync();
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Add(AddPlaceViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
 
-        //public IActionResult Privacy()
-        //{
-        //    return View();
-        //}
-
+            string userId = GetUserId();
+            await fishingPlaces.AddPlaceAsync(model, userId);
+            return RedirectToAction(nameof(FishingPlace));
+        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
@@ -65,9 +77,10 @@ namespace FishingMania.Controllers
                 PictureURL = f.PictureURL,
                 Location = f.Location,
                 Description = f.Description,
-                UserId=f.UserId
-
-
+                UserId=f.UserId,
+                TypeFishingId = f.TypeFishingId
+                
+                
             };
         }
         private List<FishingPlaceViewModel> GetFishingPlacesViewModel(List<FishingPlace> source)
@@ -81,6 +94,19 @@ namespace FishingMania.Controllers
             }
 
             return fishingPlaces;
+        }
+        private FishingPlace GetFishingPlaceDataModel(AddPlaceViewModel fishingPlace)
+        {
+            return new FishingPlace
+            {
+         
+                Name = fishingPlace.Name,
+                PictureURL = fishingPlace.PictureURL,
+                Location = fishingPlace.Location,
+                Description = fishingPlace.Description,
+                TypeFishingId = fishingPlace.TypeFishingId,
+                
+            };
         }
     }
 }

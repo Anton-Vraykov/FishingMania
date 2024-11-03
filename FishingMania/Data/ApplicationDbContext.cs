@@ -35,6 +35,12 @@ namespace FishingMania.Data
                 .WithMany()
                 .HasForeignKey(g => g.ApplicationUserId)
                 .OnDelete(DeleteBehavior.Restrict);
+            builder
+                .Entity<TypesFishing>()
+                .HasData(
+                new TypesFishing { Id = new Guid("12C8DD8d-346B-426E-B06C-75BBA97DCD63"), Name = "RiverFishing" },
+                new TypesFishing { Id = new Guid("bc64e8ef-5f7c-4edc-83d5-a43c9973eefc"), Name = "LakeFishing" },
+                new TypesFishing { Id = new Guid("bd719745-fa48-4adc-bac1-0898a04e5822"), Name = "SeaFishing" });
 
 
         }

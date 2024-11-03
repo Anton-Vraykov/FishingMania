@@ -6,7 +6,7 @@ namespace FishingMania.Data.Models
     public class TypesFishing
     {
         [Key]
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public Guid Id { get; set; } = new Guid();
         [Required]
         [MaxLength(ValidationConstant.TypeNameMax)]
         public string Name { get; set; } = string.Empty;
