@@ -22,6 +22,9 @@ namespace FishingMania.Models
         public string Description { get; set; } = string.Empty;
         public string UserId { get; set; } = string.Empty;
         public Guid TypeFishingId { get; set; }
-       
+        public Guid CarId { get; set; }
+        public Guid EventId { get; set; }
+        public Guid HotelId { get; set; }
+
     }
 }

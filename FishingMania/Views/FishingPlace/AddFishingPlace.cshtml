@@ -14,13 +14,13 @@
 
     <label class="col-form-label" asp-for="Description"></label>
 <textarea class="form-control" asp-for="Description"></textarea>
-    @* <div class="mb-3">
-        <label asp-for="@Model.TypeFishingId" class="form-label-add-edit">Select Genre</label>
+    <div class="mb-3">
+        <label asp-for="@Model.TypeFishingId" class="form-label-add-edit">Select FishingTypes</label>
         <select asp-for="@Model.TypeFishingId" class="form-control" aria-required="true" asp-items="@(new SelectList(Model.FishingTypes, "Id", "Name"))">
             <option value="">Select FishingType...</option>
         </select>
         <span asp-validation-for="@Model.TypeFishingId" class="text-danger"></span>
-    </div> *@
+    </div>
 
   
     <button class="btn btn-primary">Add Fishing Place</button>

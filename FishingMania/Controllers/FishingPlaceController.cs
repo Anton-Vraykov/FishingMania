@@ -52,7 +52,7 @@ namespace FishingMania.Controllers
             return View(model);
         }
         [HttpPost]
-        public async Task<IActionResult> Add(AddPlaceViewModel model)
+        public async Task<IActionResult> AddFishingPlace(AddPlaceViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -78,7 +78,10 @@ namespace FishingMania.Controllers
                 Location = f.Location,
                 Description = f.Description,
                 UserId=f.UserId,
-                TypeFishingId = f.TypeFishingId
+                TypeFishingId = f.TypeFishingId,
+                CarId = f.CarId,
+                EventId = f.EventId,
+                HotelId = f.HotelId
                 
                 
             };
