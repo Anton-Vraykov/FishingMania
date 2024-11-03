@@ -34,5 +34,11 @@ namespace FishingMania.Common
 
         public const int TypeNameMax = 50;
         public const int TypeNameMin = 3;
+        //Hotel
+        public const int HotelNameMax = 50;
+        public const int HotelNameMIn = 3;
+        public const int HotelMax = 50;
+        public const int HotelDescriptionMax = 500;
+        public const int HotelDescriptionMIn = 20;
     }
 }

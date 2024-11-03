@@ -18,6 +18,7 @@ namespace FishingMania.Data
 
         public virtual DbSet<FishingPlace> FishingPlaces { get; set; } = null!;
         public virtual DbSet<TypesFishing> TypesFishings { get; set; } = null!;
+        public virtual DbSet<Hotel> Hotels { get; set; } = null!;
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

@@ -17,11 +17,9 @@ namespace FishingMania.Data.Models
         [Required]
         [MaxLength(ValidationConstant.PlaceLocationMax)]
         public string Location { get; set; } = string.Empty;
-        public DateTime Reservation { get; set; }
         [Required]
         [MaxLength(ValidationConstant.PlaceDescriptionMax)]
         public string Description { get; set; } = string.Empty;
-        public double Price { get; set; }
         public string UserId { get; set; }=string.Empty;
         [ForeignKey(nameof(UserId))]
         public IdentityUser User { get; set; } = null!;
@@ -34,6 +32,9 @@ namespace FishingMania.Data.Models
         public Guid EventId { get; set; }
         [ForeignKey(nameof(EventId))]
         public Event Events { get; set; } = null!;
+        public Guid HotelId { get; set; }
+        [ForeignKey(nameof(HotelId))]
+        public Hotel Hotels { get; set; }
         public bool IsDeleted { get; set; }
         public virtual ICollection<ApplicationUserFishingPlace> ApplicationUserProduct { get; set; }
             = new List<ApplicationUserFishingPlace>();

@@ -10,6 +10,7 @@ namespace FishingMania.Data.Models
         [Required]
         [MaxLength(ValidationConstant.EventNameMax)]
         public string Name { get; set; } = string.Empty;
+        public int Quantity { get; set; }
         [Required]
         public string ImageURL { get; set; } = string.Empty;
         public double Price { get; set; }
