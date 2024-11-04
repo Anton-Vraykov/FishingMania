@@ -23,9 +23,9 @@ namespace FishingMania.Data.Models
         public string UserId { get; set; }=string.Empty;
         [ForeignKey(nameof(UserId))]
         public IdentityUser User { get; set; } = null!;
-        public Guid CarId { get; set; }
-        [ForeignKey(nameof(CarId))]
-        public Car Cars { get; set; } = null!;
+        //public Guid CarId { get; set; }
+        //[ForeignKey(nameof(CarId))]
+        //public Car Cars { get; set; } = null!;
         public Guid TypeFishingId { get; set; }
         [ForeignKey(nameof(TypeFishingId))]
         public TypesFishing TypesFishing { get; set; } = null!;
