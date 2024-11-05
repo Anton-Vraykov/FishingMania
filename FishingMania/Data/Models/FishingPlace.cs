@@ -23,21 +23,21 @@ namespace FishingMania.Data.Models
         public string UserId { get; set; }=string.Empty;
         [ForeignKey(nameof(UserId))]
         public IdentityUser User { get; set; } = null!;
-        //public Guid CarId { get; set; }
-        //[ForeignKey(nameof(CarId))]
-        //public Car Cars { get; set; } = null!;
+       
         public Guid TypeFishingId { get; set; }
         [ForeignKey(nameof(TypeFishingId))]
         public TypesFishing TypesFishing { get; set; } = null!;
-        public Guid EventId { get; set; }
-        [ForeignKey(nameof(EventId))]
-        public Event Events { get; set; } = null!;
-        public Guid HotelId { get; set; }
-        [ForeignKey(nameof(HotelId))]
-        public Hotel Hotels { get; set; }
+       
         public bool IsDeleted { get; set; }
-        public virtual ICollection<ApplicationUserFishingPlace> ApplicationUserProduct { get; set; }
+        public virtual ICollection<ApplicationUserFishingPlace> ApplicationUserFishingPlaces { get; set; }
             = new List<ApplicationUserFishingPlace>();
+        public virtual ICollection<Car> Cars { get; set; }
+            = new List<Car>();
+        public virtual ICollection<Event> Events { get; set; }
+            = new List<Event>();
+        public virtual ICollection<Hotel> Hotels { get; set; }
+            = new List<Hotel>();
+
 
     }
 }

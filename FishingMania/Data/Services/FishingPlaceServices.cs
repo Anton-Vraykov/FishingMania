@@ -23,10 +23,7 @@ namespace FishingMania.Data.Services
                 PictureURL = place.PictureURL,
                 UserId = userId,
                 TypeFishingId=place.TypeFishingId,
-              //  CarId = place.CarId,
-                EventId = place.EventId,
-                HotelId = place.HotelId
-                
+             
 
             };
 

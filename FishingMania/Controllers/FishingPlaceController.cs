@@ -78,10 +78,8 @@ namespace FishingMania.Controllers
                 Location = f.Location,
                 Description = f.Description,
                 UserId=f.UserId,
-                TypeFishingId = f.TypeFishingId,
-               // CarId = f.CarId,
-                EventId = f.EventId,
-                HotelId = f.HotelId
+                TypeFishingId = f.TypeFishingId
+               
                 
                 
             };

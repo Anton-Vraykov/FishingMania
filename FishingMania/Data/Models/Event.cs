@@ -1,5 +1,7 @@
 ﻿using FishingMania.Common;
+using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FishingMania.Data.Models
 {
@@ -14,6 +16,9 @@ namespace FishingMania.Data.Models
         [Required]
         public string ImageURL { get; set; } = string.Empty;
         public double Price { get; set; }
-        public virtual ICollection<FishingPlace> FishingPlaces { get; set; } = new HashSet<FishingPlace>();
+        public Guid FishingPlaceId { get; set; }
+        [ForeignKey(nameof(FishingPlaceId))]
+        public FishingPlace FishingPlace { get; set; } = null!;
+        
     }
 }

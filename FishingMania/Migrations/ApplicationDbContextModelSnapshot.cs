@@ -43,6 +43,9 @@ namespace FishingMania.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("FishingPlaceId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Model")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -56,6 +59,8 @@ namespace FishingMania.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("FishingPlaceId");
+
                     b.ToTable("Cars");
                 });
 
@@ -63,6 +68,9 @@ namespace FishingMania.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("FishingPlaceId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ImageURL")
@@ -82,6 +90,8 @@ namespace FishingMania.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("FishingPlaceId");
+
                     b.ToTable("Events");
                 });
 
@@ -91,19 +101,10 @@ namespace FishingMania.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CarId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
-
-                    b.Property<Guid>("EventId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("HotelId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -131,12 +132,6 @@ namespace FishingMania.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CarId");
-
-                    b.HasIndex("EventId");
-
-                    b.HasIndex("HotelId");
-
                     b.HasIndex("TypeFishingId");
 
                     b.HasIndex("UserId");
@@ -155,6 +150,9 @@ namespace FishingMania.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
+                    b.Property<Guid>("FishingPlaceId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("FreePlace")
                         .HasColumnType("int");
 
@@ -167,6 +165,8 @@ namespace FishingMania.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("FishingPlaceId");
 
                     b.ToTable("Hotels");
                 });
@@ -415,7 +415,7 @@ namespace FishingMania.Migrations
                         .IsRequired();
 
                     b.HasOne("FishingMania.Data.Models.FishingPlace", "FishingPlaces")
-                        .WithMany("ApplicationUserProduct")
+                        .WithMany("ApplicationUserFishingPlaces")
                         .HasForeignKey("FishingPlaceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -425,26 +425,30 @@ namespace FishingMania.Migrations
                     b.Navigation("FishingPlaces");
                 });
 
+            modelBuilder.Entity("FishingMania.Data.Models.Car", b =>
+                {
+                    b.HasOne("FishingMania.Data.Models.FishingPlace", "FishingPlace")
+                        .WithMany("Cars")
+                        .HasForeignKey("FishingPlaceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("FishingPlace");
+                });
+
+            modelBuilder.Entity("FishingMania.Data.Models.Event", b =>
+                {
+                    b.HasOne("FishingMania.Data.Models.FishingPlace", "FishingPlace")
+                        .WithMany("Events")
+                        .HasForeignKey("FishingPlaceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("FishingPlace");
+                });
+
             modelBuilder.Entity("FishingMania.Data.Models.FishingPlace", b =>
                 {
-                    b.HasOne("FishingMania.Data.Models.Car", "Cars")
-                        .WithMany("FishingPlaces")
-                        .HasForeignKey("CarId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FishingMania.Data.Models.Event", "Events")
-                        .WithMany("FishingPlaces")
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FishingMania.Data.Models.Hotel", "Hotels")
-                        .WithMany("FishingPlaces")
-                        .HasForeignKey("HotelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("FishingMania.Data.Models.TypesFishing", "TypesFishing")
                         .WithMany("FishingPlaces")
                         .HasForeignKey("TypeFishingId")
@@ -457,15 +461,20 @@ namespace FishingMania.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Cars");
-
-                    b.Navigation("Events");
-
-                    b.Navigation("Hotels");
-
                     b.Navigation("TypesFishing");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("FishingMania.Data.Models.Hotel", b =>
+                {
+                    b.HasOne("FishingMania.Data.Models.FishingPlace", "FishingPlace")
+                        .WithMany("Hotels")
+                        .HasForeignKey("FishingPlaceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("FishingPlace");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -519,24 +528,15 @@ namespace FishingMania.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("FishingMania.Data.Models.Car", b =>
-                {
-                    b.Navigation("FishingPlaces");
-                });
-
-            modelBuilder.Entity("FishingMania.Data.Models.Event", b =>
-                {
-                    b.Navigation("FishingPlaces");
-                });
-
             modelBuilder.Entity("FishingMania.Data.Models.FishingPlace", b =>
                 {
-                    b.Navigation("ApplicationUserProduct");
-                });
+                    b.Navigation("ApplicationUserFishingPlaces");
 
-            modelBuilder.Entity("FishingMania.Data.Models.Hotel", b =>
-                {
-                    b.Navigation("FishingPlaces");
+                    b.Navigation("Cars");
+
+                    b.Navigation("Events");
+
+                    b.Navigation("Hotels");
                 });
 
             modelBuilder.Entity("FishingMania.Data.Models.TypesFishing", b =>

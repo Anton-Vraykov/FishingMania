@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace FishingMania.Migrations
 {
     /// <inheritdoc />
-    public partial class First : Migration
+    public partial class proba : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -48,34 +50,6 @@ namespace FishingMania.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Cars",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Model = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Rezervation = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Price = table.Column<double>(type: "float", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Cars", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Events",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    ImageURL = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Price = table.Column<double>(type: "float", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Events", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -204,13 +178,9 @@ namespace FishingMania.Migrations
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     PictureURL = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Location = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Reservation = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Price = table.Column<double>(type: "float", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    CarId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     TypeFishingId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    EventId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -222,18 +192,6 @@ namespace FishingMania.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_FishingPlaces_Cars_CarId",
-                        column: x => x.CarId,
-                        principalTable: "Cars",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_FishingPlaces_Events_EventId",
-                        column: x => x.EventId,
-                        principalTable: "Events",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_FishingPlaces_TypesFishings_TypeFishingId",
                         column: x => x.TypeFishingId,
@@ -264,6 +222,81 @@ namespace FishingMania.Migrations
                         principalTable: "FishingPlaces",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Cars",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Model = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Rezervation = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Price = table.Column<double>(type: "float", nullable: false),
+                    FishingPlaceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cars", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Cars_FishingPlaces_FishingPlaceId",
+                        column: x => x.FishingPlaceId,
+                        principalTable: "FishingPlaces",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Events",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    ImageURL = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Price = table.Column<double>(type: "float", nullable: false),
+                    FishingPlaceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Events", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Events_FishingPlaces_FishingPlaceId",
+                        column: x => x.FishingPlaceId,
+                        principalTable: "FishingPlaces",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Hotels",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    Price = table.Column<double>(type: "float", nullable: false),
+                    FreePlace = table.Column<int>(type: "int", nullable: false),
+                    FishingPlaceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Hotels", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Hotels_FishingPlaces_FishingPlaceId",
+                        column: x => x.FishingPlaceId,
+                        principalTable: "FishingPlaces",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "TypesFishings",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { new Guid("12c8dd8d-346b-426e-b06c-75bba97dcd63"), "RiverFishing" },
+                    { new Guid("bc64e8ef-5f7c-4edc-83d5-a43c9973eefc"), "LakeFishing" },
+                    { new Guid("bd719745-fa48-4adc-bac1-0898a04e5822"), "SeaFishing" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -311,14 +344,14 @@ namespace FishingMania.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FishingPlaces_CarId",
-                table: "FishingPlaces",
-                column: "CarId");
+                name: "IX_Cars_FishingPlaceId",
+                table: "Cars",
+                column: "FishingPlaceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FishingPlaces_EventId",
-                table: "FishingPlaces",
-                column: "EventId");
+                name: "IX_Events_FishingPlaceId",
+                table: "Events",
+                column: "FishingPlaceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_FishingPlaces_TypeFishingId",
@@ -329,6 +362,11 @@ namespace FishingMania.Migrations
                 name: "IX_FishingPlaces_UserId",
                 table: "FishingPlaces",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Hotels_FishingPlaceId",
+                table: "Hotels",
+                column: "FishingPlaceId");
         }
 
         /// <inheritdoc />
@@ -353,19 +391,22 @@ namespace FishingMania.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "FishingPlaces");
+                name: "Cars");
+
+            migrationBuilder.DropTable(
+                name: "Events");
+
+            migrationBuilder.DropTable(
+                name: "Hotels");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
+                name: "FishingPlaces");
+
+            migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "Cars");
-
-            migrationBuilder.DropTable(
-                name: "Events");
 
             migrationBuilder.DropTable(
                 name: "TypesFishings");

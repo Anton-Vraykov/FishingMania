@@ -1,5 +1,7 @@
 ﻿using FishingMania.Common;
+using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FishingMania.Data.Models
 {
@@ -12,6 +14,10 @@ namespace FishingMania.Data.Models
         public string Model { get; set; } = string.Empty;
         public DateTime? Rezervation { get; set; }
         public double Price { get; set; }
-        public virtual ICollection<FishingPlace> FishingPlaces { get; set; } = new List<FishingPlace>();
+     
+        public Guid FishingPlaceId { get; set; }
+        [ForeignKey(nameof(FishingPlaceId))]
+        public FishingPlace FishingPlace { get; set; } = null!;
+       
     }
 }
