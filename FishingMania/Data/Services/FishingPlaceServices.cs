@@ -37,9 +37,14 @@ namespace FishingMania.Data.Services
             throw new NotImplementedException();
         }
 
-        public FishingPlace GetById(int id)
+        public async Task<FishingPlace> GetById(Guid id)
         {
-            throw new NotImplementedException();
+            FishingPlace model= this.db.FishingPlaces.Where(x => !x.IsDeleted).FirstOrDefault(x => x.Id == id);
+            if (model == null)
+            {
+                throw new Exception("There is no FishingPlace");
+            }
+            return  model;
         }
 
         public int GetFishingPlaceCount() => this.db.FishingPlaces.Where(fp => !fp.IsDeleted).Count();
@@ -50,9 +55,22 @@ namespace FishingMania.Data.Services
             return this.db.FishingPlaces.Where(x => !x.IsDeleted).OrderByDescending(x => x.Id).Skip(skip).Take(take).ToList();
         }
 
-        public void Update(FishingPlace fishingPlace)
+        public async void Update(FishingPlace fishingPlace)
         {
-            throw new NotImplementedException();
+           
+
+            var fishingPlaceToUpdate = await this.db.FishingPlaces.FirstOrDefaultAsync(x => x.Id == fishingPlace.Id);
+            if (fishingPlaceToUpdate == null) { return; }
+
+
+            fishingPlaceToUpdate.Name = fishingPlace.Name;
+            fishingPlaceToUpdate.Description = fishingPlace.Description;
+            fishingPlaceToUpdate.Location = fishingPlace.Location;
+            fishingPlaceToUpdate.PictureURL = fishingPlace.PictureURL;
+          
+
+            await this.db.SaveChangesAsync();
+
         }
         public async Task<AddPlaceViewModel> GetAddModelAsync()
         {
