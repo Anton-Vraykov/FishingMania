@@ -63,6 +63,26 @@ namespace FishingMania.Controllers
             await fishingPlaces.AddPlaceAsync(model, userId);
             return RedirectToAction(nameof(FishingPlace));
         }
+        [HttpGet]
+        public async Task<IActionResult> DetailsPlace(Guid id)
+        {
+            DetailViewModel model = await fishingPlaces.GetEditModelAsync(id);
+
+            if (model == null)
+            {
+                return BadRequest();
+            }
+
+            string userId = GetUserId();
+
+            if (model.UserId != userId)
+            {
+                return Unauthorized();
+            }
+
+            return View(model);
+        }
+       
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
@@ -84,6 +104,7 @@ namespace FishingMania.Controllers
                 
             };
         }
+    
         private List<FishingPlaceViewModel> GetFishingPlacesViewModel(List<FishingPlace> source)
         {
             var fishingPlaces = new List<FishingPlaceViewModel>();

@@ -1,0 +1,63 @@
+﻿@model DetailViewModel
+
+<h3>Detail Fishing place</h3>
+
+<form asp-controller="FishingPlace" asp-action="DetailsPlace">
+    <label class="col-form-label" asp-for="Name"></label>
+    <input class=" form-control" asp-for="Name" />
+
+    <label class="col-form-label" asp-for="PictureURL"></label>
+    <input class=" form-control" asp-for="PictureURL" />
+
+    <label class="col-form-label" asp-for="Location"></label>
+    <input class=" form-control" asp-for="Location" />
+
+   
+    <label class="col-form-label" asp-for="Description"></label>
+    <textarea class="form-control" asp-for="Description"></textarea>
+
+    <input hidden asp-for="Id" />
+    <div>
+        <button class="btn btn-primary">Edit Fishing place</button>
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#Delite-Modal">Delete Fishing Place</button>
+    </div>
+    <div class="mb-3">
+        <label asp-for="@Model.TypeFishingId" class="form-label-add-edit">Select FishingTypes</label>
+        <select asp-for="@Model.TypeFishingId" class="form-control" aria-required="true" asp-items="@(new SelectList(Model.FishingTypes, "Id", "Name"))">
+            <option value="">Select FishingType...</option>
+        </select>
+        <span asp-validation-for="@Model.TypeFishingId" class="text-danger"></span>
+    </div>
+</form>
+
+@* <div class="modal fade" id="Delite-Modal" tabindex="-1" role="dialog" aria-labelledby="Delite-Modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">You will delete fishing play</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete <b>@Model.Name</b>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button onclick="deleteFishingPlace()" type="button" class="btn btn-primary">Delete</button>
+            </div>
+        </div>
+    </div>
+</div> *@
+@* <script>
+
+        const deleteFishingPlace = () => {
+            let pass = document.getElementById('pass').value;
+            fetch(`/Home/Delete?fishingPlaceId=${@Model.Id}&password=${pass}`)
+        .then(() => redirectToPrivacy().catch((error) => { console.error('Error:', error); }));
+    }
+    const redirectToPrivacy = () => {
+        window.location = "/Home/Privacy";
+    }
+
+</script> *@

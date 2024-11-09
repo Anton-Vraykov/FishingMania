@@ -10,8 +10,8 @@ namespace FishingMania.Data.Interface
         int GetFishingPlaceCount();
         Task AddPlaceAsync(AddPlaceViewModel place, string userId);
         Task<AddPlaceViewModel> GetAddModelAsync();
-        FishingPlace GetById(int id);
-        void Update(FishingPlace fishingPlace);
+        Task<FishingPlace> GetById(Guid id);
+        Task<DetailViewModel> GetEditModelAsync(Guid id);
         void Delete(int Id, int password);
     }
 }

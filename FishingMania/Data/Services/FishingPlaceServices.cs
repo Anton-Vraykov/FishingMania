@@ -15,15 +15,15 @@ namespace FishingMania.Data.Services
         }
         public async Task AddPlaceAsync(AddPlaceViewModel place, string userId)
         {
-          
+
             var placeData = new FishingPlace
             {
                 Name = place.Name,
                 Description = place.Description,
                 PictureURL = place.PictureURL,
                 UserId = userId,
-                TypeFishingId=place.TypeFishingId,
-             
+                TypeFishingId = place.TypeFishingId,
+
 
             };
 
@@ -39,12 +39,12 @@ namespace FishingMania.Data.Services
 
         public async Task<FishingPlace> GetById(Guid id)
         {
-            FishingPlace model= this.db.FishingPlaces.Where(x => !x.IsDeleted).FirstOrDefault(x => x.Id == id);
+            FishingPlace model = this.db.FishingPlaces.Where(x => !x.IsDeleted).FirstOrDefault(x => x.Id == id);
             if (model == null)
             {
                 throw new Exception("There is no FishingPlace");
             }
-            return  model;
+            return model;
         }
 
         public int GetFishingPlaceCount() => this.db.FishingPlaces.Where(fp => !fp.IsDeleted).Count();
@@ -57,7 +57,7 @@ namespace FishingMania.Data.Services
 
         public async void Update(FishingPlace fishingPlace)
         {
-           
+
 
             var fishingPlaceToUpdate = await this.db.FishingPlaces.FirstOrDefaultAsync(x => x.Id == fishingPlace.Id);
             if (fishingPlaceToUpdate == null) { return; }
@@ -67,7 +67,7 @@ namespace FishingMania.Data.Services
             fishingPlaceToUpdate.Description = fishingPlace.Description;
             fishingPlaceToUpdate.Location = fishingPlace.Location;
             fishingPlaceToUpdate.PictureURL = fishingPlace.PictureURL;
-          
+
 
             await this.db.SaveChangesAsync();
 
@@ -90,5 +90,31 @@ namespace FishingMania.Data.Services
             return model;
         }
 
+        public async Task<DetailViewModel> GetEditModelAsync(Guid id)
+        {
+            var fishingTypes = await db.TypesFishings
+                .Select(g => new FishingTypeViewModel
+                {
+                    Id = g.Id,
+                    Name = g.Name
+                })
+                .ToListAsync();
+
+            var fishingPlace = await db.FishingPlaces
+                .Where(g => g.Id == id)
+                .Select(g => new DetailViewModel
+                {
+                    Name = g.Name,
+                    Description = g.Description,
+                    PictureURL = g.PictureURL,
+                    TypeFishingId = g.TypeFishingId,
+                    FishingTypes = fishingTypes,
+                    UserId = g. UserId
+                })
+                .FirstOrDefaultAsync();
+            ;
+
+            return fishingPlace;
+        }
     }
 }
