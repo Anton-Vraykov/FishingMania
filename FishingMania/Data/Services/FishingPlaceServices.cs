@@ -116,5 +116,15 @@ namespace FishingMania.Data.Services
 
             return fishingPlace;
         }
+        public async Task EditFishingPlaceAsync(DetailViewModel model, FishingPlace fishingPlace)
+        {
+      
+            fishingPlace.Name = model.Name;
+            fishingPlace.Description = model.Description;
+            fishingPlace.PictureURL = model.PictureURL;
+            fishingPlace.TypeFishingId = model.TypeFishingId;
+
+            await db.SaveChangesAsync();
+        }
     }
 }

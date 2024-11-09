@@ -82,7 +82,28 @@ namespace FishingMania.Controllers
 
             return View(model);
         }
-       
+        [HttpPost]
+        public async Task<IActionResult> DetailsPlace(Guid id, DetailViewModel model)
+        {
+            var fishingPlace = await fishingPlaces.GetById(id);
+
+            if (fishingPlace == null)
+            {
+                return BadRequest();
+            }
+
+            string userId = GetUserId();
+
+            if (fishingPlace.UserId != userId)
+            {
+                return Unauthorized();
+            }
+
+            await fishingPlaces.EditFishingPlaceAsync(model, fishingPlace);
+
+            return RedirectToAction(nameof(FishingPlace));
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
