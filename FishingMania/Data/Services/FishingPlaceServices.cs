@@ -126,5 +126,18 @@ namespace FishingMania.Data.Services
 
             await db.SaveChangesAsync();
         }
+        public async Task DeleteFishingPlaceAsync(Guid Id)
+        {
+            var deletedFishingPlace = db.FishingPlaces.FirstOrDefault(db => db.Id == Id);
+
+            if (deletedFishingPlace == null) 
+            {
+                return;
+            }
+
+
+            deletedFishingPlace.IsDeleted = true;
+            await db.SaveChangesAsync();
+        }
     }
 }

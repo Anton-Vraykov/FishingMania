@@ -31,7 +31,7 @@
     </div>
 </form>
 
-@* <div class="modal fade" id="Delite-Modal" tabindex="-1" role="dialog" aria-labelledby="Delite-Modal" aria-hidden="true">
+<div class="modal fade" id="Delite-Modal" tabindex="-1" role="dialog" aria-labelledby="Delite-Modal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -49,16 +49,16 @@
             </div>
         </div>
     </div>
-</div> *@
-@* <script>
+</div>
+<script>
 
-        const deleteFishingPlace = () => {
-            let pass = document.getElementById('pass').value;
-            fetch(`/Home/Delete?fishingPlaceId=${@Model.Id}&password=${pass}`)
-        .then(() => redirectToPrivacy().catch((error) => { console.error('Error:', error); }));
+    const deleteFishingPlace = () => {
+        let pass = document.getElementById('pass').value;
+        fetch(`/FishingPlace/Delete?fishingPlaceId=${@Model.Id}&password=${pass}`)
+            .then(() => redirectToPrivacy().catch((error) => { console.error('Error:', error); }));
     }
     const redirectToPrivacy = () => {
         window.location = "/Home/Privacy";
     }
 
-</script> *@
+</script>

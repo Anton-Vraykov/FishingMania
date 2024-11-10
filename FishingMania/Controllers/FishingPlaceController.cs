@@ -103,6 +103,11 @@ namespace FishingMania.Controllers
 
             return RedirectToAction(nameof(FishingPlace));
         }
+        public IActionResult Delete(Guid fishingPlaceId)
+        {
+            this.fishingPlaces.DeleteFishingPlaceAsync(fishingPlaceId);
+            return Ok();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
@@ -151,5 +156,6 @@ namespace FishingMania.Controllers
                 
             };
         }
+
     }
 }

@@ -13,6 +13,6 @@ namespace FishingMania.Data.Interface
         Task<FishingPlace> GetById(Guid id);
         Task<DetailViewModel> GetEditModelAsync(Guid id);
         Task EditFishingPlaceAsync(DetailViewModel model, FishingPlace fishingPlace);
-        void Delete(int Id, int password);
+        Task DeleteFishingPlaceAsync(Guid Id);
     }
 }
