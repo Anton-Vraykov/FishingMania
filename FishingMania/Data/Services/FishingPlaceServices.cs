@@ -22,6 +22,7 @@ namespace FishingMania.Data.Services
                 Description = place.Description,
                 PictureURL = place.PictureURL,
                 UserId = userId,
+                Location = place.Location,
                 TypeFishingId = place.TypeFishingId,
 
 
@@ -32,10 +33,10 @@ namespace FishingMania.Data.Services
         }
 
 
-        public void Delete(int Id, int password)
-        {
-            throw new NotImplementedException();
-        }
+        //public void Delete(int Id, int password)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public async Task<FishingPlace> GetById(Guid id)
         {
@@ -55,23 +56,23 @@ namespace FishingMania.Data.Services
             return this.db.FishingPlaces.Where(x => !x.IsDeleted).OrderByDescending(x => x.Id).Skip(skip).Take(take).ToList();
         }
 
-        public async void Update(FishingPlace fishingPlace)
-        {
+        //public async void Update(FishingPlace fishingPlace)
+        //{
 
 
-            var fishingPlaceToUpdate = await this.db.FishingPlaces.FirstOrDefaultAsync(x => x.Id == fishingPlace.Id);
-            if (fishingPlaceToUpdate == null) { return; }
+        //    var fishingPlaceToUpdate = await this.db.FishingPlaces.FirstOrDefaultAsync(x => x.Id == fishingPlace.Id);
+        //    if (fishingPlaceToUpdate == null) { return; }
 
 
-            fishingPlaceToUpdate.Name = fishingPlace.Name;
-            fishingPlaceToUpdate.Description = fishingPlace.Description;
-            fishingPlaceToUpdate.Location = fishingPlace.Location;
-            fishingPlaceToUpdate.PictureURL = fishingPlace.PictureURL;
+        //    fishingPlaceToUpdate.Name = fishingPlace.Name;
+        //    fishingPlaceToUpdate.Description = fishingPlace.Description;
+        //    fishingPlaceToUpdate.Location = fishingPlace.Location;
+        //    fishingPlaceToUpdate.PictureURL = fishingPlace.PictureURL;
 
 
-            await this.db.SaveChangesAsync();
+        //    await this.db.SaveChangesAsync();
 
-        }
+        //}
         public async Task<AddPlaceViewModel> GetAddModelAsync()
         {
             var fishingTypes = await db.TypesFishings
@@ -104,7 +105,9 @@ namespace FishingMania.Data.Services
                 .Where(g => g.Id == id)
                 .Select(g => new DetailViewModel
                 {
+                    Id = g.Id,
                     Name = g.Name,
+                    Location=g.Location,
                     Description = g.Description,
                     PictureURL = g.PictureURL,
                     TypeFishingId = g.TypeFishingId,
@@ -118,8 +121,9 @@ namespace FishingMania.Data.Services
         }
         public async Task EditFishingPlaceAsync(DetailViewModel model, FishingPlace fishingPlace)
         {
-      
+            fishingPlace.Id = model.Id;
             fishingPlace.Name = model.Name;
+            fishingPlace.Location = model.Location;
             fishingPlace.Description = model.Description;
             fishingPlace.PictureURL = model.PictureURL;
             fishingPlace.TypeFishingId = model.TypeFishingId;

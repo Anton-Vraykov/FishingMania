@@ -53,12 +53,17 @@
 <script>
 
     const deleteFishingPlace = () => {
-        let pass = document.getElementById('pass').value;
-        fetch(`/FishingPlace/Delete?fishingPlaceId=${@Model.Id}&password=${pass}`)
+        fetch(`/FishingPlace/Delete?fishingPlaceId=${@Model.Id}`)
             .then(() => redirectToPrivacy().catch((error) => { console.error('Error:', error); }));
     }
     const redirectToPrivacy = () => {
-        window.location = "/Home/Privacy";
+        window.location = "/FishingPlace/FishingPlace";
     }
 
 </script>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Bootstrap CSS -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">

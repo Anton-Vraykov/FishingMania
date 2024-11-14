@@ -5,6 +5,7 @@ namespace FishingMania.Models
 {
     public class AddPlaceViewModel
     {
+        public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;
         [Required]
         public string PictureURL { get; set; } = string.Empty;

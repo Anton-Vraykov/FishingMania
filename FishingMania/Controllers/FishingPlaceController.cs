@@ -147,7 +147,7 @@ namespace FishingMania.Controllers
         {
             return new FishingPlace
             {
-         
+                Id=fishingPlace.Id,
                 Name = fishingPlace.Name,
                 PictureURL = fishingPlace.PictureURL,
                 Location = fishingPlace.Location,
