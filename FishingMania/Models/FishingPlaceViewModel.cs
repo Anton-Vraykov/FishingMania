@@ -5,6 +5,7 @@ namespace FishingMania.Models
 {
     public class FishingPlaceViewModel
     {
+        [Key]
         public Guid Id { get; set; }
         [Required]
         [MaxLength(ValidationConstant.PlaceNameMax)]
