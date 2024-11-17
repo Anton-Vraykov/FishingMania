@@ -23,14 +23,14 @@ namespace FishingMania.Controllers
             return View();
         }
 
-        public IActionResult FishingPlace(int currentPage=1)
+        public async Task<IActionResult> FishingPlace(int currentPage=1)
         {
 
             var skip = (currentPage - 1) * 3;
             var take = 3;
-            var totalFishingPlaceCount = this.fishingPlaces.GetFishingPlaceCount();
+            var totalFishingPlaceCount = await this.fishingPlaces.GetFishingPlaceCountAsync();
 
-            var fishingPlaces = this.fishingPlaces.ShowAllPlace(skip, take);
+            var fishingPlaces = await this.fishingPlaces.ShowAllPlaceAsync(skip, take);
             var totalPage = totalFishingPlaceCount / 3;
             var totalPages = totalFishingPlaceCount % 3;
             if (totalPages > 0)
@@ -85,7 +85,7 @@ namespace FishingMania.Controllers
         [HttpPost]
         public async Task<IActionResult> DetailsPlace(Guid id, DetailViewModel model)
         {
-            var fishingPlace = await fishingPlaces.GetById(id);
+            var fishingPlace = await fishingPlaces.GetByIdAsync(id);
 
             if (fishingPlace == null)
             {
@@ -106,7 +106,7 @@ namespace FishingMania.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var fp= await fishingPlaces.GetById(id);
+            var fp= await fishingPlaces.GetByIdAsync(id);
 
             if (fp == null)
             {
@@ -125,7 +125,7 @@ namespace FishingMania.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id, DeleteViewModel model)
         {
-            var fp = await fishingPlaces.GetById(id);
+            var fp = await fishingPlaces.GetByIdAsync(id);
 
             if (fp == null)
             {

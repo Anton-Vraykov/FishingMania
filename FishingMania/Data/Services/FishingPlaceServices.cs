@@ -33,12 +33,7 @@ namespace FishingMania.Data.Services
         }
 
 
-        //public void Delete(int Id, int password)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        public async Task<FishingPlace> GetById(Guid id)
+        public async Task<FishingPlace> GetByIdAsync(Guid id)
         {
             FishingPlace model = this.db.FishingPlaces.Where(x => !x.IsDeleted).FirstOrDefault(x => x.Id == id);
             if (model == null)
@@ -48,31 +43,14 @@ namespace FishingMania.Data.Services
             return model;
         }
 
-        public int GetFishingPlaceCount() => this.db.FishingPlaces.Where(fp => !fp.IsDeleted).Count();
+        public async Task<int> GetFishingPlaceCountAsync() =>await this.db.FishingPlaces.Where(fp => !fp.IsDeleted).CountAsync();
 
 
-        public List<FishingPlace> ShowAllPlace(int skip, int take)
+        public async Task<List<FishingPlace>> ShowAllPlaceAsync(int skip, int take)
         {
-            return this.db.FishingPlaces.Where(x => !x.IsDeleted).OrderByDescending(x => x.Id).Skip(skip).Take(take).ToList();
+            return await this.db.FishingPlaces.Where(x => !x.IsDeleted).OrderByDescending(x => x.Id).Skip(skip).Take(take).ToListAsync();
         }
 
-        //public async void Update(FishingPlace fishingPlace)
-        //{
-
-
-        //    var fishingPlaceToUpdate = await this.db.FishingPlaces.FirstOrDefaultAsync(x => x.Id == fishingPlace.Id);
-        //    if (fishingPlaceToUpdate == null) { return; }
-
-
-        //    fishingPlaceToUpdate.Name = fishingPlace.Name;
-        //    fishingPlaceToUpdate.Description = fishingPlace.Description;
-        //    fishingPlaceToUpdate.Location = fishingPlace.Location;
-        //    fishingPlaceToUpdate.PictureURL = fishingPlace.PictureURL;
-
-
-        //    await this.db.SaveChangesAsync();
-
-        //}
         public async Task<AddPlaceViewModel> GetAddModelAsync()
         {
             var fishingTypes = await db.TypesFishings
