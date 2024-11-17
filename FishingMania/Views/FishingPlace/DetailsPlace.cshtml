@@ -45,7 +45,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button onclick="deleteFishingPlace()" type="button" class="btn btn-primary">Delete</button>
+                <a asp-controller="FishingPlace" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-primary">Delete</a>
             </div>
         </div>
     </div>
@@ -54,7 +54,7 @@
 
     const deleteFishingPlace = () => {
         fetch(`/FishingPlace/Delete?fishingPlaceId=${@Model.Id}`)
-            .then(() => redirectToPrivacy().catch((error) => { console.error('Error:', error); }));
+            .then(() => redirectToFishingPlace().catch((error) => { console.error('Error:', error); }));
     }
     const redirectToPrivacy = () => {
         window.location = "/FishingPlace/FishingPlace";
@@ -67,3 +67,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <!-- Bootstrap CSS -->
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
