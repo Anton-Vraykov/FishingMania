@@ -103,10 +103,38 @@ namespace FishingMania.Controllers
 
             return RedirectToAction(nameof(FishingPlace));
         }
-        public IActionResult Delete(Guid fishingPlaceId)
+        [HttpGet]
+        public async Task<IActionResult> Delete(Guid id)
         {
-            this.fishingPlaces.DeleteFishingPlaceAsync(fishingPlaceId);
-            return Ok();
+            var fp= await fishingPlaces.GetById(id);
+
+            if (fp == null)
+            {
+                return BadRequest();
+            }
+
+            DeleteViewModel model = new DeleteViewModel
+            {
+                Id = fp.Id,
+                Name = fp.Name
+            };
+
+            return View(model);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(Guid id, DeleteViewModel model)
+        {
+            var fp = await fishingPlaces.GetById(id);
+
+            if (fp == null)
+            {
+                return BadRequest();
+            }
+
+            await fishingPlaces.DeleteFishingPlaceAsync(fp);
+
+            return RedirectToAction(nameof(FishingPlace));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
