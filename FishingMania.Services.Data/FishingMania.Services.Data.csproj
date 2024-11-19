@@ -1,10 +1,9 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>aspnet-FishingMania-3183d8b0-ab5e-4968-87d4-3bd2ba7fc7d8</UserSecretsId>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FishingMania.Data\FishingMania.Data.csproj" />
+    <ProjectReference Include="..\FishingMania\FishingMania.csproj" />
     <ProjectReference Include="..\FishingPlace.Data.Models\FishingPlace.Data.Models.csproj" />
   </ItemGroup>
 

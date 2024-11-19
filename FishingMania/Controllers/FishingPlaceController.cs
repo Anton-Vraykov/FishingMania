@@ -1,9 +1,11 @@
+
 using FishingMania.Data.Interface;
 using FishingMania.Data.Models;
-using FishingMania.Data.Services;
 using FishingMania.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+
 
 namespace FishingMania.Controllers
 {

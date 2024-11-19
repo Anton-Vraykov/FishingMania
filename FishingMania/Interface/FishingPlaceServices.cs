@@ -1,8 +1,11 @@
 ﻿using FishingMania.Data.Interface;
-using FishingMania.Data.Models;
-using FishingMania.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
+using FishingMania.Data.Models;
+using FishingMania.Models;
+
+
+
 
 namespace FishingMania.Data.Services
 {

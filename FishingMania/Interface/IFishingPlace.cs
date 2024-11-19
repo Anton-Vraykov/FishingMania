@@ -1,6 +1,6 @@
 ﻿using FishingMania.Data.Models;
-using FishingMania.Data.Services;
 using FishingMania.Models;
+
 
 namespace FishingMania.Data.Interface
 {
