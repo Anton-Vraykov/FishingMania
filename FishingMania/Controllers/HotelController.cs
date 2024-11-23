@@ -19,9 +19,9 @@ namespace FishingMania.Controllers
 
             var skip = (currentPage - 1) * 3;
             var take = 3;
-            var totalFishingPlaceCount = await this.hotels.GetFishingPlaceCountAsync();
+            var totalFishingPlaceCount = await this.hotels.GetHotelCountAsync();
 
-            var fishingPlaces = await this.fishingPlaces.ShowAllPlaceAsync(skip, take);
+            var fishingPlaces = await this.hotels.ShowAllPlaceAsync(skip, take);
             var totalPage = totalFishingPlaceCount / 3;
             var totalPages = totalFishingPlaceCount % 3;
             if (totalPages > 0)
@@ -30,7 +30,7 @@ namespace FishingMania.Controllers
             }
             var Model = new FishingPlaceViewModelList
             {
-                List = this.fishingPlaces.GetFishingPlacesViewModel(fishingPlaces),
+                List = this.hotels.GetFishingPlacesViewModel(fishingPlaces),
                 CurrentPage = currentPage,
                 TotalPages = totalPage,
             };

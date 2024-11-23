@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace FishingMania.Migrations
+namespace FishingMania.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class proba : Migration
+    public partial class one : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -232,7 +232,8 @@ namespace FishingMania.Migrations
                     Model = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Rezervation = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Price = table.Column<double>(type: "float", nullable: false),
-                    FishingPlaceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    FishingPlaceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -254,7 +255,8 @@ namespace FishingMania.Migrations
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     ImageURL = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
-                    FishingPlaceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    FishingPlaceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -276,7 +278,8 @@ namespace FishingMania.Migrations
                     Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
                     FreePlace = table.Column<int>(type: "int", nullable: false),
-                    FishingPlaceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    FishingPlaceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {

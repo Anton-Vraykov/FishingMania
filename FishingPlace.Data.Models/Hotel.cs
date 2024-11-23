@@ -12,6 +12,9 @@ namespace FishingMania.Data.Models
         [Required]
         [MaxLength(HotelNameMax)]
         public string Name { get; set; } = string.Empty;
+        public string PictureURL { get; set; } = string.Empty;
+        public string Location { get; set; } = string.Empty;
+
         [Required]
         [MaxLength(HotelDescriptionMax)]
         public string Description { get; set; }= string.Empty;
@@ -21,7 +24,8 @@ namespace FishingMania.Data.Models
         public Guid FishingPlaceId { get; set; }
         [ForeignKey(nameof(FishingPlaceId))]
         public FishingPlace FishingPlace { get; set; } = null!;
-        
+        public bool IsDeleted { get; set; }
+
 
 
     }

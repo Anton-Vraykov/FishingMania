@@ -19,6 +19,7 @@ namespace FishingMania.Data.Models
         public Guid FishingPlaceId { get; set; }
         [ForeignKey(nameof(FishingPlaceId))]
         public FishingPlace FishingPlace { get; set; } = null!;
-        
+        public bool IsDeleted { get; set; }
+
     }
 }
