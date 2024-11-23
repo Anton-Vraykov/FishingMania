@@ -14,5 +14,8 @@ namespace FishingMania.Data.Interface
         Task<DetailViewModel> GetEditModelAsync(Guid id);
         Task EditFishingPlaceAsync(DetailViewModel model, FishingPlace fishingPlace);
         Task DeleteFishingPlaceAsync(FishingPlace fishingPlace);
+        FishingPlaceViewModel GetFishingPlaceViewModel(FishingPlace f);
+        List<FishingPlaceViewModel> GetFishingPlacesViewModel(List<FishingPlace> source);
+        FishingPlace GetFishingPlaceDataModel(AddPlaceViewModel fishingPlace);
     }
 }

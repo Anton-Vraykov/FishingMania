@@ -1,8 +1,9 @@
 ﻿using FishingMania.Data.Interface;
 using Microsoft.EntityFrameworkCore;
-using System.Globalization;
 using FishingMania.Data.Models;
 using FishingMania.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 
 
@@ -11,6 +12,7 @@ namespace FishingMania.Data.Services
 {
     public class FishingPlaceServices : IFishingPlace
     {
+       
         private readonly ApplicationDbContext db;
         public FishingPlaceServices(ApplicationDbContext db)
         {
@@ -38,7 +40,7 @@ namespace FishingMania.Data.Services
 
         public async Task<FishingPlace> GetByIdAsync(Guid id)
         {
-            FishingPlace model = this.db.FishingPlaces.Where(x => !x.IsDeleted).FirstOrDefault(x => x.Id == id);
+            FishingPlace? model =  this.db.FishingPlaces.Where(x => !x.IsDeleted).FirstOrDefault(x => x.Id == id);
             if (model == null)
             {
                 throw new Exception("There is no FishingPlace");
@@ -96,7 +98,6 @@ namespace FishingMania.Data.Services
                     UserId = g. UserId
                 })
                 .FirstOrDefaultAsync();
-            ;
 
             return fishingPlace;
         }
@@ -128,6 +129,46 @@ namespace FishingMania.Data.Services
             
            
         }
-        
+        public FishingPlaceViewModel GetFishingPlaceViewModel(FishingPlace f)
+        {
+            return new FishingPlaceViewModel
+            {
+                Id = f.Id,
+                Name = f.Name,
+                PictureURL = f.PictureURL,
+                Location = f.Location,
+                Description = f.Description,
+                UserId = f.UserId,
+                TypeFishingId = f.TypeFishingId
+
+            };
+        }
+        public List<FishingPlaceViewModel> GetFishingPlacesViewModel(List<FishingPlace> source)
+        {
+            var fishingPlaces = new List<FishingPlaceViewModel>();
+
+
+            foreach (var f in source)
+            {
+                fishingPlaces.Add(GetFishingPlaceViewModel(f));
+            }
+
+            return fishingPlaces;
+        }
+        public FishingPlace GetFishingPlaceDataModel(AddPlaceViewModel fishingPlace)
+        {
+            return new FishingPlace
+            {
+                Id = fishingPlace.Id,
+                Name = fishingPlace.Name,
+                PictureURL = fishingPlace.PictureURL,
+                Location = fishingPlace.Location,
+                Description = fishingPlace.Description,
+                TypeFishingId = fishingPlace.TypeFishingId,
+
+            };
+        }
+
+      
     }
 }

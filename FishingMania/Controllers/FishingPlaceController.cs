@@ -41,7 +41,7 @@ namespace FishingMania.Controllers
             }
             var Model = new FishingPlaceViewModelList
             {
-                List = GetFishingPlacesViewModel(fishingPlaces),
+                List = this.fishingPlaces.GetFishingPlacesViewModel(fishingPlaces),
                 CurrentPage = currentPage,
                 TotalPages = totalPage,
             };
@@ -144,48 +144,10 @@ namespace FishingMania.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        private FishingPlaceViewModel GetFishingPlaceViewModel(FishingPlace f)
-        {
-            return new FishingPlaceViewModel
-            {
-                Id = f.Id,
-                Name = f.Name,
-                PictureURL = f.PictureURL,
-                Location = f.Location,
-                Description = f.Description,
-                UserId=f.UserId,
-                TypeFishingId = f.TypeFishingId
-               
-                
-                
-            };
-        }
+       
     
-        private List<FishingPlaceViewModel> GetFishingPlacesViewModel(List<FishingPlace> source)
-        {
-            var fishingPlaces = new List<FishingPlaceViewModel>();
-
-
-            foreach (var f in source)
-            {
-                fishingPlaces.Add(GetFishingPlaceViewModel(f));
-            }
-
-            return fishingPlaces;
-        }
-        private FishingPlace GetFishingPlaceDataModel(AddPlaceViewModel fishingPlace)
-        {
-            return new FishingPlace
-            {
-                Id=fishingPlace.Id,
-                Name = fishingPlace.Name,
-                PictureURL = fishingPlace.PictureURL,
-                Location = fishingPlace.Location,
-                Description = fishingPlace.Description,
-                TypeFishingId = fishingPlace.TypeFishingId,
-                
-            };
-        }
+        
+        
 
     }
 }
