@@ -3,11 +3,11 @@
 using FishingMania.Data;
 using FishingMania.Data.Interface;
 using FishingMania.Data.Models;
-using FishingMania.Models;
 using FishingMania.Models.HotelModels;
 using Microsoft.EntityFrameworkCore;
 
-namespace FishingMania.Services.Data.Interface_and_services.Hotel
+
+namespace FishingMania.Services.Data.Interface_and_services.Hotels
 {
     public class HotelServices : IHotel
     {
@@ -16,13 +16,13 @@ namespace FishingMania.Services.Data.Interface_and_services.Hotel
         {
             this.db = db;
         }
-        public Task<List<FishingMania.Data.Models.Hotel>> ShowAllPlaceAsync(int skip, int take)
+        public async Task<List<Hotel>> ShowAllPlaceAsync(int skip, int take)
         {
-           return  this.db.Hotels.Where(x => !x.IsDeleted).OrderByDescending(x => x.Id).Skip(skip).Take(take).ToListAsync();
+           return await this.db.Hotels.Where(x => !x.IsDeleted).OrderByDescending(x => x.Id).Skip(skip).Take(take).ToListAsync();
         }
-        public async Task<int> GetHotelCountAsync() => await this.db.Hotels.Where(fp => !fp.IsDeleted).CountAsync();
+        public int GetHotelCountAsync() =>  this.db.Hotels.Where(fp => !fp.IsDeleted).Count();
 
-        public HotelViewModel GetHotelViewModel(FishingMania.Data.Models.Hotel h)
+        public HotelViewModel GetHotelViewModel(Hotel h)
         {
             return new HotelViewModel
             {
@@ -31,18 +31,18 @@ namespace FishingMania.Services.Data.Interface_and_services.Hotel
                 PictureURL = h.PictureURL,
                 Location = h.Location,
                 Description = h.Description,
-                
-
+                FreePlace = h.FreePlace,
+                Price= h.Price
             };
         }
-        public List<HotelViewModel> GetHotelsViewModel(List<FishingMania.Data.Models.Hotel> source)
+        public List<HotelViewModel> GetHotelsViewModel(List<Hotel> source)
         {
             var hotel = new List<HotelViewModel>();
 
 
             foreach (var f in source)
             {
-                hotel.Add(GetFishingPlaceViewModel(f));
+                hotel.Add(GetHotelViewModel(f));
             }
 
             return hotel;

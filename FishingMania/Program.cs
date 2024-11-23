@@ -1,8 +1,10 @@
 using FishingMania.Data;
 using FishingMania.Data.Interface;
 using FishingMania.Data.Services;
+using FishingMania.Services.Data.Interface_and_services.Hotels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol.Core.Types;
 
 namespace FishingMania
 {
@@ -18,6 +20,7 @@ namespace FishingMania
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
             builder.Services.AddScoped<IFishingPlace, FishingPlaceServices>();
+            builder.Services.AddScoped<IHotel, HotelServices>();
 
             builder.Services.AddDefaultIdentity<IdentityUser>(options =>
             {

@@ -1,6 +1,7 @@
 ﻿using FishingMania.Data.Interface;
-using FishingMania.Models;
+using FishingMania.Models.HotelModels;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace FishingMania.Controllers
 {
@@ -19,18 +20,18 @@ namespace FishingMania.Controllers
 
             var skip = (currentPage - 1) * 3;
             var take = 3;
-            var totalFishingPlaceCount = await this.hotels.GetHotelCountAsync();
+            var totalhotelsCount =  this.hotels.GetHotelCountAsync();
 
-            var fishingPlaces = await this.hotels.ShowAllPlaceAsync(skip, take);
-            var totalPage = totalFishingPlaceCount / 3;
-            var totalPages = totalFishingPlaceCount % 3;
+            var hotels = await this.hotels.ShowAllPlaceAsync(skip, take);
+            var totalPage = totalhotelsCount / 3;
+            var totalPages = totalhotelsCount % 3;
             if (totalPages > 0)
             {
                 totalPage++;
             }
-            var Model = new FishingPlaceViewModelList
+            var Model = new HotelViewModelList
             {
-                List = this.hotels.GetFishingPlacesViewModel(fishingPlaces),
+                List =this.hotels.GetHotelsViewModel(hotels),
                 CurrentPage = currentPage,
                 TotalPages = totalPage,
             };

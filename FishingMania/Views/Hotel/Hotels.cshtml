@@ -3,25 +3,28 @@
 
 @if (Model == null || Model.List.Count == 0 || Model.List == null)
 {
-    <h2>No fishing place now avaible</h2>
+    <h2>No Hotels now avaible</h2>
 }
 else
 {
-    foreach (var fishingPlace in Model.List)
+    foreach (var hotel in Model.List)
     {
-        <div onclick="loadFishingPlace('@fishingPlace.Id')" id="fishingPlace-container" class="container">
-            <h4>@fishingPlace.Name</h4>
+        <div onclick="loadFishingPlace('@hotel.Id')" id="fishingPlace-container" class="container">
+            <h4>@hotel.Name</h4>
             <div class="row">
                 <div class="col-md-3">
-                    <img src="@fishingPlace.PictureURL" class="img-thumbnail" />
+                    <img src="@hotel.PictureURL" class="img-thumbnail" />
                 </div>
                 <div class="col-md-9">
-                    @fishingPlace.Description
+                    @hotel.Description
                 </div>
             </div>
             <div class="row">
+                <div class="col text-left">
+                    Location :@hotel.FreePlace
+                </div>
                 <div class="col text-right">
-                    Location :@fishingPlace.Location
+                    Location :@hotel.Location
                 </div>
             </div>
         </div>
