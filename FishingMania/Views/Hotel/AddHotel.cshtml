@@ -1,0 +1,28 @@
+﻿@using FishingMania.Services.Data.Models.HotelModels
+
+@model AddHotelViewModel
+
+<h3>Add Hotel</h3>
+
+<form asp-controller="FishingPlace" asp-action="AddFishingPlace">
+    <label class="col-form-label" asp-for="Name"></label>
+    <input class=" form-control" asp-for="Name" />
+
+    <label class="col-form-label" asp-for="PictureURL"></label>
+    <input class=" form-control" asp-for="PictureURL" />
+
+    <label class="col-form-label" asp-for="Location"></label>
+    <input class=" form-control" asp-for="Location" />
+
+    <label class="col-form-label" asp-for="Price"></label>
+<textarea class="form-control" asp-for="Price"></textarea>
+
+    <label class="col-form-label" asp-for="FreePlace"></label>
+<textarea class="form-control" asp-for="FreePlace"></textarea>
+
+    <label class="col-form-label" asp-for="Description"></label>
+<textarea class="form-control" asp-for="Description"></textarea>
+    
+
+    <button class="btn btn-primary">Add Hotel</button>
+</form>

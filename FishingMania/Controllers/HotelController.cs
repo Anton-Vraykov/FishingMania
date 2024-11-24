@@ -1,5 +1,8 @@
 ﻿using FishingMania.Data.Interface;
+using FishingMania.Data.Models;
+using FishingMania.Models;
 using FishingMania.Models.HotelModels;
+using FishingMania.Services.Data.Models.HotelModels;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -36,6 +39,23 @@ namespace FishingMania.Controllers
                 TotalPages = totalPage,
             };
             return View(Model);
+        }
+        [HttpGet]
+        public async Task<IActionResult> AddHotel()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddFishingPlace(AddHotelViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            string userId = GetUserId();
+            await hotels.AddHotelAsync(model, userId);
+            return RedirectToAction(nameof(Hotels));
         }
     }
 }

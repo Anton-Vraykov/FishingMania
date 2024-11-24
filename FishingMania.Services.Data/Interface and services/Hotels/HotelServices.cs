@@ -3,7 +3,9 @@
 using FishingMania.Data;
 using FishingMania.Data.Interface;
 using FishingMania.Data.Models;
+using FishingMania.Models;
 using FishingMania.Models.HotelModels;
+using FishingMania.Services.Data.Models.HotelModels;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -20,7 +22,7 @@ namespace FishingMania.Services.Data.Interface_and_services.Hotels
         {
            return await this.db.Hotels.Where(x => !x.IsDeleted).OrderByDescending(x => x.Id).Skip(skip).Take(take).ToListAsync();
         }
-        public int GetHotelCountAsync() =>  this.db.Hotels.Where(fp => !fp.IsDeleted).Count();
+        public int GetHotelCountAsync() => this.db.Hotels.Where(fp => !fp.IsDeleted).Count();
 
         public HotelViewModel GetHotelViewModel(Hotel h)
         {
@@ -47,5 +49,31 @@ namespace FishingMania.Services.Data.Interface_and_services.Hotels
 
             return hotel;
         }
+        
+       
+        public async Task AddHotelAsync(AddHotelViewModel place, string userId)
+        {
+            
+            if (place.Price < 0)
+            {
+                return;
+            }
+            var placeData = new Hotel
+            {
+                Name = place.Name,
+                Description = place.Description,
+                PictureURL = place.PictureURL,
+                Location = place.Location,
+                UserId=userId,
+                Price = place.Price,
+                FreePlace= place.FreePlace
+
+
+            };
+
+            await db.Hotels.AddAsync(placeData);
+            await db.SaveChangesAsync();
+        }
+
     }
 }

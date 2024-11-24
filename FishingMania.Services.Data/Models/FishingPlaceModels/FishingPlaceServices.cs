@@ -4,15 +4,13 @@ using FishingMania.Data.Models;
 using FishingMania.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using FishingMania.Data;
 
-
-
-
-namespace FishingMania.Data.Services
+namespace FishingMania.Services.Data.Models.FishingPlaceModels
 {
     public class FishingPlaceServices : IFishingPlace
     {
-       
+
         private readonly ApplicationDbContext db;
         public FishingPlaceServices(ApplicationDbContext db)
         {
@@ -40,7 +38,7 @@ namespace FishingMania.Data.Services
 
         public async Task<FishingPlace> GetByIdAsync(Guid id)
         {
-            FishingPlace? model =  this.db.FishingPlaces.Where(x => !x.IsDeleted).FirstOrDefault(x => x.Id == id);
+            FishingPlace? model = db.FishingPlaces.Where(x => !x.IsDeleted).FirstOrDefault(x => x.Id == id);
             if (model == null)
             {
                 throw new Exception("There is no FishingPlace");
@@ -48,12 +46,12 @@ namespace FishingMania.Data.Services
             return model;
         }
 
-        public async Task<int> GetFishingPlaceCountAsync() =>await this.db.FishingPlaces.Where(fp => !fp.IsDeleted).CountAsync();
+        public async Task<int> GetFishingPlaceCountAsync() => await db.FishingPlaces.Where(fp => !fp.IsDeleted).CountAsync();
 
 
         public async Task<List<FishingPlace>> ShowAllPlaceAsync(int skip, int take)
         {
-            return await this.db.FishingPlaces.Where(x => !x.IsDeleted).OrderByDescending(x => x.Id).Skip(skip).Take(take).ToListAsync();
+            return await db.FishingPlaces.Where(x => !x.IsDeleted).OrderByDescending(x => x.Id).Skip(skip).Take(take).ToListAsync();
         }
 
         public async Task<AddPlaceViewModel> GetAddModelAsync()
@@ -90,12 +88,12 @@ namespace FishingMania.Data.Services
                 {
                     Id = g.Id,
                     Name = g.Name,
-                    Location=g.Location,
+                    Location = g.Location,
                     Description = g.Description,
                     PictureURL = g.PictureURL,
                     TypeFishingId = g.TypeFishingId,
                     FishingTypes = fishingTypes,
-                    UserId = g. UserId
+                    UserId = g.UserId
                 })
                 .FirstOrDefaultAsync();
 
@@ -114,9 +112,9 @@ namespace FishingMania.Data.Services
         }
         public async Task DeleteFishingPlaceAsync(FishingPlace fishingPlace)
         {
-            
-            
-            if (fishingPlace.IsDeleted != true) 
+
+
+            if (fishingPlace.IsDeleted != true)
             {
                 fishingPlace.IsDeleted = true;
                 await db.SaveChangesAsync();
@@ -126,8 +124,8 @@ namespace FishingMania.Data.Services
                 return;
             }
 
-            
-           
+
+
         }
         public FishingPlaceViewModel GetFishingPlaceViewModel(FishingPlace f)
         {
@@ -169,6 +167,6 @@ namespace FishingMania.Data.Services
             };
         }
 
-      
+
     }
 }

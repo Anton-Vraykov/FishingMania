@@ -1,7 +1,7 @@
 using FishingMania.Data;
 using FishingMania.Data.Interface;
-using FishingMania.Data.Services;
 using FishingMania.Services.Data.Interface_and_services.Hotels;
+using FishingMania.Services.Data.Models.FishingPlaceModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol.Core.Types;
