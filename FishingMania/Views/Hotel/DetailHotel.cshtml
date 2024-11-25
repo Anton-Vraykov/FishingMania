@@ -1,8 +1,10 @@
-﻿@model DetailViewModel
+﻿@using FishingMania.Services.Data.Models.HotelModels
 
-<h3>Detail Fishing place</h3>
+@model HotelDetailViewModel
 
-<form asp-controller="FishingPlace" asp-action="DetailsPlace">
+<h3>Detail Hotel</h3>
+
+<form asp-controller="Hotel" asp-action="DetailHotel">
     <label class="col-form-label" asp-for="Name"></label>
     <input class=" form-control" asp-for="Name" />
 
@@ -12,22 +14,23 @@
     <label class="col-form-label" asp-for="Location"></label>
     <input class=" form-control" asp-for="Location" />
 
+    <label class="col-form-label" asp-for="Price"></label>
+    <input class=" form-control" asp-for="Price" />
+
+    <label class="col-form-label" asp-for="FreePlace"></label>
+    <input class=" form-control" asp-for="FreePlace" />
+
 
     <label class="col-form-label" asp-for="Description"></label>
     <textarea class="form-control" asp-for="Description"></textarea>
 
+
     <input hidden asp-for="Id" />
 
-    <div class="mb-3">
-        <label asp-for="@Model.TypeFishingId" class="form-label-add-edit">Select FishingTypes</label>
-        <select asp-for="@Model.TypeFishingId" class="form-control" aria-required="true" asp-items="@(new SelectList(Model.FishingTypes, "Id", "Name"))">
-            <option value="">Select FishingType...</option>
-        </select>
-        <span asp-validation-for="@Model.TypeFishingId" class="text-danger"></span>
-    </div>
+    
     <div>
-        <button class="btn btn-primary">Edit Fishing place</button>
-        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#Delite-Modal">Delete Fishing Place</button>
+        <button class="btn btn-primary">Edit Hotel</button>
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#Delite-Modal">Delete Hotel</button>
     </div>
 </form>
 
@@ -45,7 +48,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <a asp-controller="FishingPlace" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-primary">Delete</a>
+                <a asp-controller="Hotel" asp-action="DeleteHotel" asp-route-id="@Model.Id" class="btn btn-primary">Delete</a>
             </div>
         </div>
     </div>
@@ -53,7 +56,7 @@
 <script>
 
     const deleteFishingPlace = () => {
-        fetch(`/FishingPlace/Delete?fishingPlaceId=${@Model.Id}`)
+        fetch(`/Hotel/DeleteHotel?fishingPlaceId=${@Model.Id}`)
             .then(() => redirectToFishingPlace().catch((error) => { console.error('Error:', error); }));
     }
     const redirectToPrivacy = () => {

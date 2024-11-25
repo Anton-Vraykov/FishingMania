@@ -12,6 +12,10 @@ namespace FishingMania.Data.Interface
         List<HotelViewModel> GetHotelsViewModel(List<Hotel> source);
         HotelViewModel GetHotelViewModel(Hotel h);
         Task AddHotelAsync(AddHotelViewModel place, string userId, Guid Id);
-        
+        Task<HotelDetailViewModel> GetEditHotelModelAsync(Guid id);
+        Task<Hotel> GetByIdAsync(Guid id);
+        Task EditHotelAsync(HotelDetailViewModel model, Hotel hotel);
+        Task DeleteHotelAsync(Hotel fishingPlace);
+
     }
 }

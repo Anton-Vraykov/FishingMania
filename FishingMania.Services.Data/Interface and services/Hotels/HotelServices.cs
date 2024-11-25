@@ -6,7 +6,9 @@ using FishingMania.Data.Models;
 using FishingMania.Models;
 using FishingMania.Models.HotelModels;
 using FishingMania.Services.Data.Models.HotelModels;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 
 namespace FishingMania.Services.Data.Interface_and_services.Hotels
@@ -78,7 +80,67 @@ namespace FishingMania.Services.Data.Interface_and_services.Hotels
             await db.Hotels.AddAsync(placeData);
             await db.SaveChangesAsync();
         }
+        public async Task<HotelDetailViewModel> GetEditHotelModelAsync(Guid id)
+        {
+            
+
+            var hotel = await db.Hotels
+                .Where(g => g.Id == id)
+                .Select(g => new HotelDetailViewModel
+                {
+                    Id = g.Id,
+                    Name = g.Name,
+                    Location = g.Location,
+                    Description = g.Description,
+                    PictureURL = g.PictureURL,
+                    Price=g.Price,
+                    FreePlace= g.FreePlace,
+                    FishingPlaceId=g.FishingPlaceId,
+                    UserId = g.UserId
+                })
+                .FirstOrDefaultAsync();
+
+            return hotel;
+        }
+
+        public async Task<Hotel> GetByIdAsync(Guid id)
+        {
+            var hotel= await db.Hotels.Where(h=>h.IsDeleted == false).FirstOrDefaultAsync(h=>h.Id==id);
+            if (hotel == null)
+            {
+                throw new ArgumentException("There is no hotel ");
+            }
+            return hotel;
+        }
+        public async Task EditHotelAsync(HotelDetailViewModel model, Hotel hotel)
+        {
+            hotel.Id = model.Id;
+            hotel.Name = model.Name;
+            hotel.Location = model.Location;
+            hotel.Description = model.Description;
+            hotel.PictureURL = model.PictureURL;
+            hotel.FreePlace = model.FreePlace;
+            hotel.Price = model.Price;
 
 
+            await db.SaveChangesAsync();
+        }
+        public async Task DeleteHotelAsync(Hotel hotel)
+        {
+
+
+            if (hotel.IsDeleted != true)
+            {
+                hotel.IsDeleted = true;
+                await db.SaveChangesAsync();
+            }
+            else
+            {
+                return;
+            }
+
+
+
+        }
     }
 }

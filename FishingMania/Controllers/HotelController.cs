@@ -23,7 +23,7 @@ namespace FishingMania.Controllers
 
             var skip = (currentPage - 1) * 3;
             var take = 3;
-            var totalhotelsCount =  this.hotels.GetHotelCountAsync();
+            var totalhotelsCount = this.hotels.GetHotelCountAsync();
 
             var hotels = await this.hotels.ShowAllPlaceAsync(skip, take);
             var totalPage = totalhotelsCount / 3;
@@ -34,7 +34,7 @@ namespace FishingMania.Controllers
             }
             var Model = new HotelViewModelList
             {
-                List =this.hotels.GetHotelsViewModel(hotels),
+                List = this.hotels.GetHotelsViewModel(hotels),
                 CurrentPage = currentPage,
                 TotalPages = totalPage,
             };
@@ -51,15 +51,88 @@ namespace FishingMania.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> AddHotel(AddHotelViewModel model,Guid Id)
+        public async Task<IActionResult> AddHotel(AddHotelViewModel model, Guid Id)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
-            
+
             string userId = GetUserId();
-            await hotels.AddHotelAsync(model, userId,Id);
+            await hotels.AddHotelAsync(model, userId, Id);
+            return RedirectToAction(nameof(Hotels));
+        }
+        [HttpGet]
+        public async Task<IActionResult> DetailHotel(Guid id)
+        {
+            HotelDetailViewModel model = await hotels.GetEditHotelModelAsync(id);
+
+            if (model == null)
+            {
+                return BadRequest();
+            }
+
+            string userId = GetUserId();
+
+            if (model.UserId != userId)
+            {
+                return Unauthorized();
+            }
+
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> DetailHotel(Guid id, HotelDetailViewModel model)
+        {
+            var hotel = await hotels.GetByIdAsync(id);
+
+            if (hotel == null)
+            {
+                return BadRequest();
+            }
+
+            string userId = GetUserId();
+
+            if (hotel.UserId != userId)
+            {
+                return Unauthorized();
+            }
+
+            await hotels.EditHotelAsync(model, hotel);
+
+            return RedirectToAction(nameof(Hotels));
+        }
+        [HttpGet]
+        public async Task<IActionResult> DeleteHotel(Guid id)
+        {
+            var hotel = await hotels.GetByIdAsync(id);
+
+            if (hotel == null)
+            {
+                return BadRequest();
+            }
+
+            DeleteHotelViewModel model = new DeleteHotelViewModel
+            {
+                Id = hotel.Id,
+                Name = hotel.Name
+            };
+
+            return View(model);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(Guid id, DeleteHotelViewModel model)
+        {
+            var fp = await hotels.GetByIdAsync(id);
+
+            if (fp == null)
+            {
+                return BadRequest();
+            }
+
+            await hotels.DeleteHotelAsync(fp);
+
             return RedirectToAction(nameof(Hotels));
         }
     }
