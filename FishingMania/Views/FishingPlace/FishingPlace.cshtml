@@ -22,6 +22,7 @@ else
                 <div class="col text-right">
                     Location :@fishingPlace.Location 
                 </div>
+                
                 <a asp-controller="Hotel" asp-action="Hotels" asp-route-id="@fishingPlace.Id" class="btn btn-primary">Hotels</a>
             </div>
         </div>
@@ -42,7 +43,7 @@ else
             else
             {
                 <li class="page-item">
-                    <a class="page-link" href="/Home/Privacy?currentPage=@(Model.CurrentPage-1)" tabindex="-1">Previous</a>
+                    <a class="page-link" href="/FishingPlace/FishingPlace?currentPage=@(Model.CurrentPage-1)" tabindex="-1">Previous</a>
                 </li>
             }
 
@@ -51,12 +52,12 @@ else
                 if (i + 1 == Model.CurrentPage)
                 {
                     <li class="page-item active">
-                        <a class="page-link" href="/Home/Privacy?currentPage=@(i+1)">@(i + 1) <span class="sr-only">(current)</span></a>
+                        <a class="page-link" href="/FishingPlace/FishingPlace?currentPage=@(i+1)">@(i + 1) <span class="sr-only">(current)</span></a>
                     </li>
                 }
                 else
                 {
-                    <li class="page-item"><a class="page-link" href="/Home/Privacy?currentPage=@(i+1)">@(i + 1)</a></li>
+                    <li class="page-item"><a class="page-link" href="/FishingPlace/FishingPlace?currentPage=@(i+1)">@(i + 1)</a></li>
                 }
 
             }
@@ -69,7 +70,7 @@ else
             else
             {
                 <li class="page-item">
-                    <a class="page-link" href="/Home/Privacy?currentPage=@(Model.CurrentPage+1)">Next</a>
+                    <a class="page-link" href="/FishingPlace/FishingPlace?currentPage=@(Model.CurrentPage+1)">Next</a>
                 </li>
             }
 

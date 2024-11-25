@@ -60,20 +60,24 @@ namespace FishingMania.Services.Data.Interface_and_services.Hotels
             }
             var placeData = new Hotel
             {
+                Id=place.Id,
                 Name = place.Name,
                 Description = place.Description,
                 PictureURL = place.PictureURL,
                 Location = place.Location,
                 UserId=userId,
                 Price = place.Price,
-                FreePlace= place.FreePlace
+                FreePlace= place.FreePlace,
+               
 
 
             };
 
+
             await db.Hotels.AddAsync(placeData);
             await db.SaveChangesAsync();
         }
+
 
     }
 }

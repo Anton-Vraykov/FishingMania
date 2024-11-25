@@ -38,21 +38,26 @@ namespace FishingMania.Controllers
                 CurrentPage = currentPage,
                 TotalPages = totalPage,
             };
+            if (totalhotelsCount == 0)
+            {
+                return RedirectToAction(nameof(AddHotel));
+            }
             return View(Model);
         }
         [HttpGet]
         public async Task<IActionResult> AddHotel()
         {
+
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> AddFishingPlace(AddHotelViewModel model)
+        public async Task<IActionResult> AddHotel(AddHotelViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
-
+            
             string userId = GetUserId();
             await hotels.AddHotelAsync(model, userId);
             return RedirectToAction(nameof(Hotels));
