@@ -45,13 +45,13 @@ namespace FishingMania.Controllers
             return View(Model);
         }
         [HttpGet]
-        public async Task<IActionResult> AddHotel()
+        public async Task<IActionResult> AddHotel(Guid Id)
         {
 
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> AddHotel(AddHotelViewModel model)
+        public async Task<IActionResult> AddHotel(AddHotelViewModel model,Guid Id)
         {
             if (!ModelState.IsValid)
             {
@@ -59,7 +59,7 @@ namespace FishingMania.Controllers
             }
             
             string userId = GetUserId();
-            await hotels.AddHotelAsync(model, userId);
+            await hotels.AddHotelAsync(model, userId,Id);
             return RedirectToAction(nameof(Hotels));
         }
     }

@@ -11,7 +11,7 @@ namespace FishingMania.Data.Interface
         public int GetHotelCountAsync();
         List<HotelViewModel> GetHotelsViewModel(List<Hotel> source);
         HotelViewModel GetHotelViewModel(Hotel h);
-        Task AddHotelAsync(AddHotelViewModel place, string userId);
+        Task AddHotelAsync(AddHotelViewModel place, string userId, Guid Id);
         
     }
 }

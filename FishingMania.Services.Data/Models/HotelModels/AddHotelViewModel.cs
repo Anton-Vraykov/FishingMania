@@ -16,7 +16,8 @@ namespace FishingMania.Services.Data.Models.HotelModels
         public string Description { get; set; } = string.Empty;
         public double Price { get; set; }
         public int FreePlace { get; set; }
+        public Guid FishingPlaceId { get; set; }
 
-       
+
     }
 }

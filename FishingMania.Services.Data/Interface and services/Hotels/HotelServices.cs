@@ -51,7 +51,7 @@ namespace FishingMania.Services.Data.Interface_and_services.Hotels
         }
         
        
-        public async Task AddHotelAsync(AddHotelViewModel place, string userId)
+        public async Task AddHotelAsync(AddHotelViewModel place, string userId, Guid Id)
         {
             
             if (place.Price < 0)
@@ -60,7 +60,7 @@ namespace FishingMania.Services.Data.Interface_and_services.Hotels
             }
             var placeData = new Hotel
             {
-                Id=place.Id,
+               
                 Name = place.Name,
                 Description = place.Description,
                 PictureURL = place.PictureURL,
@@ -68,6 +68,7 @@ namespace FishingMania.Services.Data.Interface_and_services.Hotels
                 UserId=userId,
                 Price = place.Price,
                 FreePlace= place.FreePlace,
+                FishingPlaceId=Id
                
 
 
