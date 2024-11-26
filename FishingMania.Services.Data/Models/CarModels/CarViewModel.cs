@@ -1,24 +1,22 @@
-﻿using FishingMania.Common;
-using System.ComponentModel.DataAnnotations;
+﻿
+using FishingMania.Common;
+using FishingMania.Data.Models;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
-namespace FishingMania.Data.Models
+namespace FishingMania.Services.Data.Models.CarModels
 {
-    public class Car
+    public class CarViewModel
     {
-        [Key]
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public Guid Id { get; set; }
         [Required]
         [MaxLength(ValidationConstant.CarModelMax)]
         public string Model { get; set; } = string.Empty;
         public string PictureURL { get; set; } = string.Empty;
-        public double Price { get; set; }
         public string Details { get; set; }
         public string Location { get; set; }
+        public double Price { get; set; }
         public Guid FishingPlaceId { get; set; }
-        [ForeignKey(nameof(FishingPlaceId))]
-        public FishingPlace FishingPlace { get; set; } = null!;
         public bool IsDeleted { get; set; }
-
     }
 }

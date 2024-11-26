@@ -1,30 +1,33 @@
-﻿@model FishingPlaceViewModelList
+﻿@using FishingMania.Services.Data.Models.CarModels
+@model CarViewModelList
+
 
 @if (Model == null || Model.List.Count == 0 || Model.List == null)
 {
-    <h2>No fishing place now avaible</h2>
+    <h2>No Cars now avaible</h2>
 }
 else
 {
-    foreach (var fishingPlace in Model.List)
+    foreach (var car in Model.List)
     {
-        <div onclick="loadFishingPlace('@fishingPlace.Id')" id="fishingPlace-container" class="container">
-            <h4>@fishingPlace.Name</h4>
+        <div onclick="loadCar('@car.Id')" id="fishingPlace-container" class="container">
+            <h4>@car.Model</h4>
             <div class="row">
-                <div class="col-md-3">
-                    <img src="@fishingPlace.PictureURL" class="img-thumbnail" />
+                <div class="col-md-6">
+                    <img src="@car.PictureURL" class="img-thumbnail" />
                 </div>
                 <div class="col-md-9">
-                    @fishingPlace.Description
+                    @car.Details
                 </div>
             </div>
             <div class="row">
-                <div class="col text-right">
-                    Location :@fishingPlace.Location 
+               
+                <div class="col text-left">
+                    Price :@car.Price
                 </div>
-                
-                <a asp-controller="Hotel" asp-action="AddHotel" asp-route-id="@fishingPlace.Id" class="btn btn-primary">Hotels</a>
-                <a asp-controller="Car" asp-action="AddCar" asp-route-id="@fishingPlace.Id" class="btn btn-primary">Cars</a>
+                <div class="col text-right">
+                    Location :@car.Location
+                </div>
             </div>
         </div>
         <hr />
@@ -44,7 +47,7 @@ else
             else
             {
                 <li class="page-item">
-                    <a class="page-link" href="/FishingPlace/FishingPlace?currentPage=@(Model.CurrentPage-1)" tabindex="-1">Previous</a>
+                    <a class="page-link" href="/Hotel/Hotels?currentPage=@(Model.CurrentPage-1)" tabindex="-1">Previous</a>
                 </li>
             }
 
@@ -53,12 +56,12 @@ else
                 if (i + 1 == Model.CurrentPage)
                 {
                     <li class="page-item active">
-                        <a class="page-link" href="/FishingPlace/FishingPlace?currentPage=@(i+1)">@(i + 1) <span class="sr-only">(current)</span></a>
+                        <a class="page-link" href="/Hotel/Hotels?currentPage=@(i+1)">@(i + 1) <span class="sr-only">(current)</span></a>
                     </li>
                 }
                 else
                 {
-                    <li class="page-item"><a class="page-link" href="/FishingPlace/FishingPlace?currentPage=@(i+1)">@(i + 1)</a></li>
+                    <li class="page-item"><a class="page-link" href="/Hotel/Hotels?currentPage=@(i+1)">@(i + 1)</a></li>
                 }
 
             }
@@ -71,7 +74,7 @@ else
             else
             {
                 <li class="page-item">
-                    <a class="page-link" href="/FishingPlace/FishingPlace?currentPage=@(Model.CurrentPage+1)">Next</a>
+                    <a class="page-link" href="/Hotel/Hotels?currentPage=@(Model.CurrentPage+1)">Next</a>
                 </li>
             }
 
@@ -81,7 +84,7 @@ else
     </nav>
 }
 <script>
-    const loadFishingPlace = (Id) => {
-        window.location = '/FishingPlace/DetailsPlace?Id=' + Id;
+    const loadCar = (Id) => {
+        window.location = '/Car/DetailCar?Id=' + Id;
     }
 </script>
