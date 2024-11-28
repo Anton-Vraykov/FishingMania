@@ -3,6 +3,7 @@ using FishingMania.Data;
 using FishingMania.Data.Models;
 using FishingMania.Models.HotelModels;
 using FishingMania.Services.Data.Models.CarModels;
+using FishingMania.Services.Data.Models.HotelModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace FishingMania.Services.Data.Interface_and_services.Cars
@@ -28,9 +29,45 @@ namespace FishingMania.Services.Data.Interface_and_services.Cars
                 PictureURL = car.PictureURL,
                 Location = car.Location,
                 FishingPlaceId = car.FishingPlaceId,
+                AvelableCars = car.AvelableCars,
                 Price = car.Price
             };
         }
 
+        public List<CarViewModel> GetCarViewModel(List<Car> source)
+        {
+            var cars = new List<CarViewModel>();
+
+
+            foreach (var car in source)
+            {
+                cars.Add(GetCarViewModel(car));
+            }
+
+            return cars;
+        }
+        public async Task AddCarAsync(AddCarViewModel car, string userId, Guid Id)
+        {
+
+            if (car.Price < 0)
+            {
+                return;
+            }
+            var carData = new Car
+            {
+
+                Model = car.Model,
+                Details = car.Details,
+                PictureURL = car.PictureURL,
+                Location = car.Location,
+                UserId = userId,
+                Price = car.Price,
+                AvelableCars = car.AvelableCars,
+                FishingPlaceId = Id
+
+            };
+            await db.Cars.AddAsync(carData);
+            await db.SaveChangesAsync();
+        }
     }
 }

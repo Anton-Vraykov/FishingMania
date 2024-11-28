@@ -1,12 +1,14 @@
 ﻿using FishingMania.Data.Interface;
+using FishingMania.Data.Models;
 using FishingMania.Models.HotelModels;
 using FishingMania.Services.Data.Interface_and_services.Cars;
 using FishingMania.Services.Data.Models.CarModels;
+using FishingMania.Services.Data.Models.HotelModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FishingMania.Controllers
 {
-    public class CarController : Controller
+    public class CarController : BaseController
     {
         private readonly ICar cars;
 
@@ -24,8 +26,8 @@ namespace FishingMania.Controllers
             var totalCarsCount = this.cars.GetCarCountAsync();
 
             var cars = await this.cars.ShowAllCarAsync(skip, take);
-            var totalPage = totalhotelsCount / 3;
-            var totalPages = totalhotelsCount % 3;
+            var totalPage = totalCarsCount / 3;
+            var totalPages = totalCarsCount % 3;
             if (totalPages > 0)
             {
                 totalPage++;
@@ -41,6 +43,24 @@ namespace FishingMania.Controllers
                 return RedirectToAction(nameof(AddCar));
             }
             return View(Model);
+
+        }
+        [HttpGet]
+        public async Task<IActionResult> AddCar(Guid Id)
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddCar(AddCarViewModel model, Guid Id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            string userId = GetUserId();
+            await cars.AddCarAsync(model, userId, Id);
+            return RedirectToAction(nameof(Cars));
         }
     }
 }

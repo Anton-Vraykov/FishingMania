@@ -1,0 +1,28 @@
+﻿@using FishingMania.Services.Data.Models.CarModels
+
+@model AddCarViewModel
+
+<h3>Add Car</h3>
+
+<form asp-controller="Car" asp-action="AddCar">
+    <label class="col-form-label" asp-for="Model"></label>
+    <input class=" form-control" asp-for="Model" />
+
+    <label class="col-form-label" asp-for="PictureURL"></label>
+    <input class=" form-control" asp-for="PictureURL" />
+
+    <label class="col-form-label" asp-for="Location"></label>
+    <input class=" form-control" asp-for="Location" />
+
+    <label class="col-form-label" asp-for="Price"></label>
+<textarea class="form-control" asp-for="Price"></textarea>
+
+    <label class="col-form-label" asp-for="AvelableCars"></label>
+<textarea class="form-control" asp-for="AvelableCars"></textarea>
+
+    <label class="col-form-label" asp-for="Details"></label>
+<textarea class="form-control" asp-for="Details"></textarea>
+
+    <input hidden asp-for="Id" />
+    <button class="btn btn-primary">Add Car</button>
+</form>

@@ -15,6 +15,8 @@ namespace FishingMania.Data.Models
         public double Price { get; set; }
         public string Details { get; set; }
         public string Location { get; set; }
+        public int AvelableCars { get; set; }
+        public string UserId { get; set; }
         public Guid FishingPlaceId { get; set; }
         [ForeignKey(nameof(FishingPlaceId))]
         public FishingPlace FishingPlace { get; set; } = null!;
