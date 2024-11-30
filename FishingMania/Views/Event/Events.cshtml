@@ -1,0 +1,93 @@
+﻿@using FishingMania.Services.Data.Models.EventModels
+
+@model EventViewModelList
+
+
+@if (Model == null || Model.List.Count == 0 || Model.List == null)
+{
+    <h2>No Event now avaible</h2>
+}
+else
+{
+    foreach (var ev in Model.List)
+    {
+        <div onclick="loadHotel('@ev.Id')" id="fishingPlace-container" class="container">
+            <h4>@ev.Name</h4>
+            <div class="row">
+                <div class="col-md-3">
+                    <img src="@ev.ImageURL" class="img-thumbnail" />
+                </div>
+                <div class="col-md-9">
+                    @ev.Description
+                </div>
+            </div>
+            <div class="row">
+                <div class="col text-left">
+                    FreePlace :@ev.FreePlace
+                </div>
+                <div class="col text-left">
+                    Price :@ev.Price
+                </div>
+                <div class="col text-right">
+                    Location :@ev.Location
+                </div>
+            </div>
+        </div>
+        <hr />
+
+    }
+
+    <nav aria-label="...">
+        <ul class="pagination">
+
+            @if (Model.CurrentPage == 1)
+            {
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">Previous</a>
+                </li>
+
+            }
+            else
+            {
+                <li class="page-item">
+                    <a class="page-link" href="/Hotel/Hotels?currentPage=@(Model.CurrentPage-1)" tabindex="-1">Previous</a>
+                </li>
+            }
+
+            @for (int i = 0; i < Model.TotalPages; i++)
+            {
+                if (i + 1 == Model.CurrentPage)
+                {
+                    <li class="page-item active">
+                        <a class="page-link" href="/Hotel/Hotels?currentPage=@(i+1)">@(i + 1) <span class="sr-only">(current)</span></a>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item"><a class="page-link" href="/Hotel/Hotels?currentPage=@(i+1)">@(i + 1)</a></li>
+                }
+
+            }
+            @if (Model.CurrentPage == Model.TotalPages)
+            {
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">Next</a>
+                </li>
+            }
+            else
+            {
+                <li class="page-item">
+                    <a class="page-link" href="/Hotel/Hotels?currentPage=@(Model.CurrentPage+1)">Next</a>
+                </li>
+            }
+
+
+
+        </ul>
+    </nav>
+}
+<script>
+    const loadHotel = (Id) => {
+        window.location = '/Car/DetailCar?Id=' + Id;
+    }
+</script>

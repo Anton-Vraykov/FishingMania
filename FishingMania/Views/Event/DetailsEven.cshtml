@@ -1,16 +1,16 @@
-﻿@using FishingMania.Services.Data.Models.CarModels
+﻿@using FishingMania.Services.Data.Models.EventModels
 
 
-@model CarDetailViewModel
+@model EventDetailViewModel
 
 <h3>Detail Hotel</h3>
 
-<form asp-controller="Car" asp-action="DetailCar">
-    <label class="col-form-label" asp-for="Model"></label>
-    <input class=" form-control" asp-for="Model" />
+<form asp-controller="Event" asp-action="DetailEvent">
+    <label class="col-form-label" asp-for="Name"></label>
+    <input class=" form-control" asp-for="Name" />
 
-    <label class="col-form-label" asp-for="PictureURL"></label>
-    <input class=" form-control" asp-for="PictureURL" />
+    <label class="col-form-label" asp-for="ImageURL"></label>
+    <input class=" form-control" asp-for="ImageURL" />
 
     <label class="col-form-label" asp-for="Location"></label>
     <input class=" form-control" asp-for="Location" />
@@ -18,20 +18,20 @@
     <label class="col-form-label" asp-for="Price"></label>
     <input class=" form-control" asp-for="Price" />
 
-    <label class="col-form-label" asp-for="AvelableCars"></label>
-    <input class=" form-control" asp-for="AvelableCars" />
+    <label class="col-form-label" asp-for="FreePlace"></label>
+    <input class=" form-control" asp-for="FreePlace" />
 
 
-    <label class="col-form-label" asp-for="Details"></label>
-    <textarea class="form-control" asp-for="Details"></textarea>
+    <label class="col-form-label" asp-for="Description"></label>
+    <textarea class="form-control" asp-for="Description"></textarea>
 
 
     <input hidden asp-for="Id" />
 
 
     <div>
-        <button class="btn btn-primary">Edit Hotel</button>
-        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#Delite-Modal">Delete Hotel</button>
+        <button class="btn btn-primary">Edit Event</button>
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#Delite-Modal">Delete Event</button>
     </div>
 </form>
 
@@ -45,11 +45,11 @@
                 </button>
             </div>
             <div class="modal-body">
-                Are you sure you want to delete <b>@Model.Model</b>
+                Are you sure you want to delete <b>@Model.Name</b>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <a asp-controller="Car" asp-action="DeleteCar" asp-route-id="@Model.Id" class="btn btn-primary">Delete</a>
+                <a asp-controller="Event" asp-action="DeleteEvent" asp-route-id="@Model.Id" class="btn btn-primary">Delete</a>
             </div>
         </div>
     </div>

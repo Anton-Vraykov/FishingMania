@@ -103,5 +103,38 @@ namespace FishingMania.Controllers
 
             return RedirectToAction(nameof(Cars));
         }
+        [HttpGet]
+        public async Task<IActionResult> DeleteCar(Guid id)
+        {
+            var car = await cars.GetByIdAsync(id);
+
+            if (car == null)
+            {
+                return BadRequest();
+            }
+
+            DeleteCarViewModel model = new DeleteCarViewModel
+            {
+                Id = car.Id,
+                Model = car.Model
+            };
+
+            return View(model);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(Guid id, DeleteCarViewModel model)
+        {
+            var cs = await cars.GetByIdAsync(id);
+
+            if (cs == null)
+            {
+                return BadRequest();
+            }
+
+            await cars.DeleteCarAsync(cs);
+
+            return RedirectToAction(nameof(Cars));
+        }
     }
 }

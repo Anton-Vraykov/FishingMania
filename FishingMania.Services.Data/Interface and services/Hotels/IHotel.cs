@@ -15,7 +15,7 @@ namespace FishingMania.Data.Interface
         Task<HotelDetailViewModel> GetEditHotelModelAsync(Guid id);
         Task<Hotel> GetByIdAsync(Guid id);
         Task EditHotelAsync(HotelDetailViewModel model, Hotel hotel);
-        Task DeleteHotelAsync(Hotel fishingPlace);
+        Task DeleteHotelAsync(Hotel hotel);
 
     }
 }

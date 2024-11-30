@@ -1,0 +1,29 @@
+﻿@using FishingMania.Services.Data.Models.EventModels
+
+
+@model AddEventViewModel
+
+<h3>Add Car</h3>
+
+<form asp-controller="Event" asp-action="AddEvent">
+    <label class="col-form-label" asp-for="Name"></label>
+    <input class=" form-control" asp-for="Name" />
+
+    <label class="col-form-label" asp-for="ImageURL"></label>
+    <input class=" form-control" asp-for="ImageURL" />
+
+    <label class="col-form-label" asp-for="Location"></label>
+    <input class=" form-control" asp-for="Location" />
+
+    <label class="col-form-label" asp-for="Price"></label>
+<textarea class="form-control" asp-for="Price"></textarea>
+
+    <label class="col-form-label" asp-for="FreePlace"></label>
+<textarea class="form-control" asp-for="FreePlace"></textarea>
+
+    <label class="col-form-label" asp-for="Description"></label>
+<textarea class="form-control" asp-for="Description"></textarea>
+
+    <input hidden asp-for="Id" />
+    <button class="btn btn-primary">Add Event</button>
+</form>

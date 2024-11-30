@@ -115,5 +115,19 @@ namespace FishingMania.Services.Data.Interface_and_services.Cars
 
             await db.SaveChangesAsync();
         }
+
+        public  async Task DeleteCarAsync(Car car)
+        {
+
+            if (car.IsDeleted != true)
+            {
+                car.IsDeleted = true;
+                await db.SaveChangesAsync();
+            }
+            else
+            {
+                return;
+            }
+        }
     }
 }

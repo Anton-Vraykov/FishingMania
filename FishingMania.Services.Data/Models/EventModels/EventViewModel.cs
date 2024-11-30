@@ -1,27 +1,26 @@
-﻿using FishingMania.Common;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿
 
-namespace FishingMania.Data.Models
+using FishingMania.Common;
+using FishingMania.Data.Models;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+
+namespace FishingMania.Services.Data.Models.EventModels
 {
-    public class Event
+    public class EventViewModel
     {
-        [Key]
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public Guid Id { get; set; } 
         [Required]
         [MaxLength(ValidationConstant.EventNameMax)]
         public string Name { get; set; } = string.Empty;
         public int FreePlace { get; set; }
-        public string Location { get; set; } = string.Empty;
-        [Required]
         public string Description { get; set; } = string.Empty;
-        public string ImageURL { get; set; } = string.Empty;
+        public string Location { get; set; } = string.Empty;
         public string UserId { get; set; } = string.Empty;
+        [Required]
+        public string ImageURL { get; set; } = string.Empty;
         public double Price { get; set; }
         public Guid FishingPlaceId { get; set; }
-        [ForeignKey(nameof(FishingPlaceId))]
-        public FishingPlace FishingPlace { get; set; } = null!;
         public bool IsDeleted { get; set; }
-
     }
 }
