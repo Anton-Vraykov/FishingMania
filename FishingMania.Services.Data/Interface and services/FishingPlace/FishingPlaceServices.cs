@@ -2,8 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using FishingMania.Data.Models;
 using FishingMania.Models;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using FishingMania.Data;
 
 namespace FishingMania.Services.Data.Models.FishingPlaceModels

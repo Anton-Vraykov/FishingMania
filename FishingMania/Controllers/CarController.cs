@@ -34,7 +34,7 @@ namespace FishingMania.Controllers
             }
             var Model = new CarViewModelList
             {
-                List = this.cars.GetCarViewModel(cars),
+                List = this.cars.GetCarsViewModel(cars),
                 CurrentPage = currentPage,
                 TotalPages = totalPage,
             };
@@ -48,18 +48,59 @@ namespace FishingMania.Controllers
         [HttpGet]
         public async Task<IActionResult> AddCar(Guid Id)
         {
+
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> AddCar(AddCarViewModel model, Guid Id)
+        public async Task<IActionResult> AddCar(AddCarViewModel models, Guid Id)
         {
-            if (!ModelState.IsValid)
+            //if (!ModelState.IsValid)
+            //{
+            //    return View(models);
+            //}
+
+            string userId = GetUserId();
+            await cars.AddCarAsync(models, userId, Id);
+            return RedirectToAction(nameof(Cars));
+        }
+        [HttpGet]
+        public async Task<IActionResult> DetailCar(Guid id)
+        {
+            CarDetailViewModel model = await cars.GetEditCarModelAsync(id);
+
+            if (model == null)
             {
-                return View(model);
+                return BadRequest();
             }
 
             string userId = GetUserId();
-            await cars.AddCarAsync(model, userId, Id);
+
+            if (model.UserId != userId)
+            {
+                return Unauthorized();
+            }
+
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> DetailCar(Guid id, CarDetailViewModel carmodel)
+        {
+            var car = await cars.GetByIdAsync(id);
+
+            if (car == null)
+            {
+                return BadRequest();
+            }
+
+            string userId = GetUserId();
+
+            if (car.UserId != userId)
+            {
+                return Unauthorized();
+            }
+
+            await cars.EditCarAsync(carmodel, car);
+
             return RedirectToAction(nameof(Cars));
         }
     }

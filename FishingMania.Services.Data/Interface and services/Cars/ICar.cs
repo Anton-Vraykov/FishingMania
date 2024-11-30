@@ -1,9 +1,9 @@
 ﻿
 
 using FishingMania.Data.Models;
-using FishingMania.Models.HotelModels;
 using FishingMania.Services.Data.Models.CarModels;
 using FishingMania.Services.Data.Models.HotelModels;
+
 
 namespace FishingMania.Services.Data.Interface_and_services.Cars
 {
@@ -11,8 +11,12 @@ namespace FishingMania.Services.Data.Interface_and_services.Cars
     {
         Task<List<Car>> ShowAllCarAsync(int skip, int take);
         public int GetCarCountAsync();
-        List<CarViewModel> GetCarViewModel(List<Car> source);
+        List<CarViewModel> GetCarsViewModel(List<Car> source);
         CarViewModel GetCarViewModel(Car car);
         Task AddCarAsync(AddCarViewModel car, string userId, Guid Id);
+        Task<CarDetailViewModel> GetEditCarModelAsync(Guid id);
+        Task<Car> GetByIdAsync(Guid id);
+        Task EditCarAsync(CarDetailViewModel model, Car car);
+        Task DeleteCarAsync(Car car);
     }
 }

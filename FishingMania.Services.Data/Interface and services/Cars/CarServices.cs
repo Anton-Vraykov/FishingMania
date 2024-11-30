@@ -28,13 +28,14 @@ namespace FishingMania.Services.Data.Interface_and_services.Cars
                 Model = car.Model,
                 PictureURL = car.PictureURL,
                 Location = car.Location,
-                FishingPlaceId = car.FishingPlaceId,
+                Details = car.Details,
                 AvelableCars = car.AvelableCars,
-                Price = car.Price
+                Price = car.Price,
+                
             };
         }
 
-        public List<CarViewModel> GetCarViewModel(List<Car> source)
+        public List<CarViewModel> GetCarsViewModel(List<Car> source)
         {
             var cars = new List<CarViewModel>();
 
@@ -67,6 +68,51 @@ namespace FishingMania.Services.Data.Interface_and_services.Cars
 
             };
             await db.Cars.AddAsync(carData);
+            await db.SaveChangesAsync();
+        }
+
+        public async Task<CarDetailViewModel> GetEditCarModelAsync(Guid id)
+        {
+            var car = await db.Cars
+                 .Where(c => c.Id == id)
+                 .Select(c => new CarDetailViewModel
+                 {
+                     Id = c.Id,
+                     Model = c.Model,
+                     Location = c.Location,
+                     Details = c.Details,
+                     PictureURL = c.PictureURL,
+                     Price = c.Price,
+                     AvelableCars = c.AvelableCars,
+                     FishingPlaceId = c.FishingPlaceId,
+                     UserId = c.UserId
+                 })
+                 .FirstOrDefaultAsync();
+
+            return car;
+        }
+
+        public async Task<Car> GetByIdAsync(Guid id)
+        {
+            var car = await db.Cars.Where(c => c.IsDeleted == false).FirstOrDefaultAsync(c => c.Id == id);
+            if (car == null)
+            {
+                throw new ArgumentException("There is no car ");
+            }
+            return car;
+        }
+
+        public async Task EditCarAsync(CarDetailViewModel model, Car car)
+        {
+            car.Id = model.Id;
+            car.Model = model.Model;
+            car.Location = model.Location;
+            car.Details = model.Details;
+            car.PictureURL = model.PictureURL;
+            car.AvelableCars = model.AvelableCars;
+            car.Price = model.Price;
+
+
             await db.SaveChangesAsync();
         }
     }

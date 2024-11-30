@@ -48,7 +48,7 @@ namespace FishingMania.Controllers
         public async Task<IActionResult> AddHotel(Guid Id)
         {
 
-            return View();
+            return  View();
         }
         [HttpPost]
         public async Task<IActionResult> AddHotel(AddHotelViewModel model, Guid Id)

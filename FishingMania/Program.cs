@@ -1,10 +1,11 @@
 using FishingMania.Data;
 using FishingMania.Data.Interface;
+using FishingMania.Services.Data.Interface_and_services.Cars;
 using FishingMania.Services.Data.Interface_and_services.Hotels;
 using FishingMania.Services.Data.Models.FishingPlaceModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using NuGet.Protocol.Core.Types;
+
 
 namespace FishingMania
 {
@@ -21,6 +22,7 @@ namespace FishingMania
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
             builder.Services.AddScoped<IFishingPlace, FishingPlaceServices>();
             builder.Services.AddScoped<IHotel, HotelServices>();
+            builder.Services.AddScoped<ICar, CarServices>();
 
             builder.Services.AddDefaultIdentity<IdentityUser>(options =>
             {
