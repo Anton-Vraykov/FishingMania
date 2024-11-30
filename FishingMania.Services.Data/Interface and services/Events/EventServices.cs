@@ -35,6 +35,8 @@ namespace FishingMania.Services.Data.Interface_and_services.Events
                 FishingPlaceId = Id
 
             };
+            await db.Events.AddAsync(placeData);
+            await db.SaveChangesAsync();
         } 
         public int GetEventCountAsync()=> this.db.Events.Where(e=>e.IsDeleted==false).Count();
         
