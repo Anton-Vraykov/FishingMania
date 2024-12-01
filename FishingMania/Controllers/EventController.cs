@@ -1,7 +1,5 @@
 ﻿using FishingMania.Services.Data.Interface_and_services.Events;
-using FishingMania.Services.Data.Models.CarModels;
 using FishingMania.Services.Data.Models.EventModels;
-using FishingMania.Services.Data.Models.HotelModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FishingMania.Controllers
@@ -60,45 +58,78 @@ namespace FishingMania.Controllers
             await events.AddEventAsync(model, userId, Id);
             return RedirectToAction(nameof(Events));
         }
-        //[HttpGet]
-        //public async Task<IActionResult> DetailEvent(Guid id)
-        //{
-        //    EventDetailViewModel model = await events.GetEditEventModelAsync(id);
+        [HttpGet]
+        public async Task<IActionResult> DetailsEvent(Guid id)
+        {
+            EventDetailViewModel model = await events.GetEditEventModelAsync(id);
 
-        //    if (model == null)
-        //    {
-        //        return BadRequest();
-        //    }
+            if (model == null)
+            {
+                return BadRequest();
+            }
 
-        //    string userId = GetUserId();
+            string userId = GetUserId();
 
-        //    if (model.UserId != userId)
-        //    {
-        //        return Unauthorized();
-        //    }
+            if (model.UserId != userId)
+            {
+                return Unauthorized();
+            }
 
-        //    return View(model);
-        //}
-        //[HttpPost]
-        //public async Task<IActionResult> DetailHotel(Guid id, HotelDetailViewModel model)
-        //{
-        //    var hotel = await hotels.GetByIdAsync(id);
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> DetailsEvent(Guid id, EventDetailViewModel model)
+        {
+            var even = await events.GetByIdAsync(id);
 
-        //    if (hotel == null)
-        //    {
-        //        return BadRequest();
-        //    }
+            if (even == null)
+            {
+                return BadRequest();
+            }
 
-        //    string userId = GetUserId();
+            string userId = GetUserId();
 
-        //    if (hotel.UserId != userId)
-        //    {
-        //        return Unauthorized();
-        //    }
+            if (even.UserId != userId)
+            {
+                return Unauthorized();
+            }
 
-        //    await hotels.EditHotelAsync(model, hotel);
+            await events.EditEventAsync(model, even);
 
-        //    return RedirectToAction(nameof(Hotels));
-        //}
+            return RedirectToAction(nameof(Events));
+        }
+        [HttpGet]
+        public async Task<IActionResult> DeleteEvent(Guid id)
+        {
+            var even = await events.GetByIdAsync(id);
+
+            if (even == null)
+            {
+                return BadRequest();
+            }
+
+            DeleteEventViewModel model = new DeleteEventViewModel
+            {
+                Id = even.Id,
+                Name = even.Name
+            };
+
+            return View(model);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(Guid id, DeleteEventViewModel model)
+        {
+            var fp = await events.GetByIdAsync(id);
+
+            if (fp == null)
+            {
+                return BadRequest();
+            }
+
+            await events.DeleteEventAsync(fp);
+
+            return RedirectToAction(nameof(Events));
+        }
     }
 }

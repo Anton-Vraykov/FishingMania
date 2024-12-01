@@ -4,6 +4,7 @@ using FishingMania.Data.Models;
 using FishingMania.Services.Data.Interface_and_services.Events;
 using FishingMania.Services.Data.Models.CarModels;
 using FishingMania.Services.Data.Models.EventModels;
+using FishingMania.Services.Data.Models.HotelModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace FishingMania.Services.Data.Interface_and_services.Events
@@ -72,6 +73,65 @@ namespace FishingMania.Services.Data.Interface_and_services.Events
         public async Task<List<Event>> ShowAllPlaceAsync(int skip, int take)
         {
             return await this.db.Events.Where(x => !x.IsDeleted).OrderByDescending(x => x.Id).Skip(skip).Take(take).ToListAsync();
+        }
+        public async Task<EventDetailViewModel> GetEditEventModelAsync(Guid id)
+        {
+
+
+            var events = await db.Events
+                .Where(e => e.Id == id)
+                .Select(g => new EventDetailViewModel
+                {
+                    Id = g.Id,
+                    Name = g.Name,
+                    Location = g.Location,
+                    Description = g.Description,
+                    ImageURL = g.ImageURL,
+                    Price = g.Price,
+                    FreePlace = g.FreePlace,
+                    FishingPlaceId = g.FishingPlaceId,
+                    UserId = g.UserId
+                })
+                .FirstOrDefaultAsync();
+
+            return events;
+        }
+        public async Task<Event> GetByIdAsync(Guid id)
+        {
+            var even = await db.Events.Where(h => h.IsDeleted == false).FirstOrDefaultAsync(h => h.Id == id);
+            if (even == null)
+            {
+                throw new ArgumentException("There is no events ");
+            }
+            return even;
+        }
+        public async Task EditEventAsync(EventDetailViewModel model, Event even)
+        {
+            even.Id = model.Id;
+            even.Name = model.Name;
+            even.Location = model.Location;
+            even.Description = model.Description;
+            even.ImageURL = model.ImageURL;
+            even.FreePlace = model.FreePlace;
+            even.Price = model.Price;
+
+
+            await db.SaveChangesAsync();
+        }
+        public async Task DeleteEventAsync(Event even)
+        {
+
+
+            if (even.IsDeleted != true)
+            {
+                even.IsDeleted = true;
+                await db.SaveChangesAsync();
+            }
+            else
+            {
+                return;
+            }
+
         }
     }
 }
