@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FishingMania.Common\FishingMania.Common.csproj" />
     <ProjectReference Include="..\FishingPlace.Data.Models\FishingPlace.Data.Models.csproj" />
   </ItemGroup>
 

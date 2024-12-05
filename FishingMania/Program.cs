@@ -6,18 +6,22 @@ using FishingMania.Services.Data.Interface_and_services.Hotels;
 using FishingMania.Services.Data.Models.FishingPlaceModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using static FishingMania.Common.ValidationConstant;
 
 
 namespace FishingMania
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+            string adminEmail = builder.Configuration.GetValue<string>("Administrator:Email")!;
+            string adminUsername = builder.Configuration.GetValue<string>("Administrator:Username")!;
+            string adminPassword = builder.Configuration.GetValue<string>("Administrator:Password")!;
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -35,6 +39,7 @@ namespace FishingMania
                 options.Password.RequireUppercase = false;
 
             })
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
 
@@ -61,7 +66,7 @@ namespace FishingMania
             app.UseStaticFiles();
 
             app.UseRouting();
-
+             
             app.UseAuthentication();
             app.UseAuthorization();
 
@@ -69,7 +74,30 @@ namespace FishingMania
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
             app.MapRazorPages();
-
+            using (var scope = app.Services.CreateScope())
+            {
+                var roleManager=scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                var roles = new[] { "Admin", "User" };
+                foreach (var role in roles)
+                {
+                    if(!await roleManager.RoleExistsAsync(role))
+                        await roleManager.CreateAsync(new IdentityRole(role));
+                    
+                }
+            }
+            using (var scope = app.Services.CreateScope())
+            {
+                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+                
+                if(userManager.FindByEmailAsync(adminEmail) != null)
+                {
+                    var user = new IdentityUser();
+                    user.Email = adminEmail;
+                    user.UserName = adminUsername;
+                    await userManager.CreateAsync(user, adminPassword);
+                    await userManager.AddToRoleAsync(user, AdminRoleName);
+                }
+            }
             app.Run();
         }
     }

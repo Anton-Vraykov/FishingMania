@@ -40,5 +40,7 @@ namespace FishingMania.Common
         public const int HotelMax = 50;
         public const int HotelDescriptionMax = 500;
         public const int HotelDescriptionMIn = 20;
+        //Admin
+        public const string AdminRoleName = "Admin";
     }
 }
