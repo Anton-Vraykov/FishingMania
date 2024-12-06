@@ -1,5 +1,6 @@
 using FishingMania.Data;
 using FishingMania.Data.Interface;
+using FishingMania.Services.Data.Interface_and_services.Admin;
 using FishingMania.Services.Data.Interface_and_services.Cars;
 using FishingMania.Services.Data.Interface_and_services.Events;
 using FishingMania.Services.Data.Interface_and_services.Hotels;
@@ -29,6 +30,7 @@ namespace FishingMania
             builder.Services.AddScoped<IHotel, HotelServices>();
             builder.Services.AddScoped<ICar, CarServices>();
             builder.Services.AddScoped<IEvent,EventServices>();
+            builder.Services.AddScoped<IUserService, UserService>();
 
             builder.Services.AddDefaultIdentity<IdentityUser>(options =>
             {
@@ -41,6 +43,7 @@ namespace FishingMania
             })
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            
             builder.Services.AddControllersWithViews();
 
             builder.Services.ConfigureApplicationCookie(options =>
@@ -70,6 +73,13 @@ namespace FishingMania
             app.UseAuthentication();
             app.UseAuthorization();
 
+
+            app.MapControllerRoute(
+                 name: "Areas",
+                 pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+            app.MapControllerRoute(
+                name: "Errors",
+                pattern: "{controller=Home}/{action=Index}/{statusCode?}");
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
