@@ -5,9 +5,10 @@ using System.Diagnostics;
 
 namespace FishingMania.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : BaseController
     {
-        [AllowAnonymous]
+
         public IActionResult Index()
         {
             if (User?.Identity?.IsAuthenticated ?? false)

@@ -1,10 +1,9 @@
-﻿using FishingMania.Data.Interface;
-using FishingMania.Data.Models;
-using FishingMania.Models.HotelModels;
+﻿
 using FishingMania.Services.Data.Interface_and_services.Cars;
 using FishingMania.Services.Data.Models.CarModels;
-using FishingMania.Services.Data.Models.HotelModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using static FishingMania.Common.ValidationConstant;
 
 namespace FishingMania.Controllers
 {
@@ -38,19 +37,18 @@ namespace FishingMania.Controllers
                 CurrentPage = currentPage,
                 TotalPages = totalPage,
             };
-            if (totalCarsCount == 0)
-            {
-                return RedirectToAction(nameof(AddCar));
-            }
+            
             return View(Model);
 
         }
+        [Authorize(Roles = AdminRoleName)]
         [HttpGet]
         public async Task<IActionResult> AddCar(Guid Id)
         {
 
             return View();
         }
+        [Authorize(Roles = AdminRoleName)]
         [HttpPost]
         public async Task<IActionResult> AddCar(AddCarViewModel models, Guid Id)
         {
@@ -63,6 +61,7 @@ namespace FishingMania.Controllers
             await cars.AddCarAsync(models, userId, Id);
             return RedirectToAction(nameof(Cars));
         }
+        [Authorize(Roles = AdminRoleName)]
         [HttpGet]
         public async Task<IActionResult> DetailCar(Guid id)
         {
@@ -82,6 +81,7 @@ namespace FishingMania.Controllers
 
             return View(model);
         }
+        [Authorize(Roles = AdminRoleName)]
         [HttpPost]
         public async Task<IActionResult> DetailCar(Guid id, CarDetailViewModel carmodel)
         {
@@ -103,6 +103,7 @@ namespace FishingMania.Controllers
 
             return RedirectToAction(nameof(Cars));
         }
+        [Authorize(Roles = AdminRoleName)]
         [HttpGet]
         public async Task<IActionResult> DeleteCar(Guid id)
         {
@@ -121,6 +122,7 @@ namespace FishingMania.Controllers
 
             return View(model);
         }
+        [Authorize(Roles = AdminRoleName)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id, DeleteCarViewModel model)

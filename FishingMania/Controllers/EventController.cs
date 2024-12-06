@@ -1,6 +1,8 @@
 ﻿using FishingMania.Services.Data.Interface_and_services.Events;
 using FishingMania.Services.Data.Models.EventModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using static FishingMania.Common.ValidationConstant;
 
 namespace FishingMania.Controllers
 {
@@ -32,20 +34,22 @@ namespace FishingMania.Controllers
                 CurrentPage = currentPage,
                 TotalPages = totalPage,
             };
-            if (totalCarsCount == 0)
-            {
-                return RedirectToAction(nameof(AddEvent));
-            }
+            //if (totalCarsCount == 0)
+            //{
+            //    return RedirectToAction(nameof(AddEvent));
+            //}
             return View(Model);
 
 
         }
+        [Authorize(Roles = AdminRoleName)]
         [HttpGet]
         public async Task<IActionResult> AddEvent(Guid Id)
         {
 
             return View();
         }
+        [Authorize(Roles = AdminRoleName)]
         [HttpPost]
         public async Task<IActionResult> AddEvent(AddEventViewModel model, Guid Id)
         {
@@ -58,6 +62,7 @@ namespace FishingMania.Controllers
             await events.AddEventAsync(model, userId, Id);
             return RedirectToAction(nameof(Events));
         }
+        [Authorize(Roles = AdminRoleName)]
         [HttpGet]
         public async Task<IActionResult> DetailsEvent(Guid id)
         {
@@ -77,6 +82,7 @@ namespace FishingMania.Controllers
 
             return View(model);
         }
+        [Authorize(Roles = AdminRoleName)]
         [HttpPost]
         public async Task<IActionResult> DetailsEvent(Guid id, EventDetailViewModel model)
         {
@@ -98,6 +104,7 @@ namespace FishingMania.Controllers
 
             return RedirectToAction(nameof(Events));
         }
+        [Authorize(Roles = AdminRoleName)]
         [HttpGet]
         public async Task<IActionResult> DeleteEvent(Guid id)
         {
@@ -116,6 +123,7 @@ namespace FishingMania.Controllers
 
             return View(model);
         }
+        [Authorize(Roles = AdminRoleName)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id, DeleteEventViewModel model)

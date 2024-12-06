@@ -2,7 +2,8 @@
 using FishingMania.Data.Interface;
 using FishingMania.Data.Models;
 using FishingMania.Models;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
+using static FishingMania.Common.ValidationConstant;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -47,12 +48,14 @@ namespace FishingMania.Controllers
             };
             return View(Model);
         }
+        [Authorize(Roles = AdminRoleName)]
         [HttpGet]
         public async Task<IActionResult> AddFishingPlace()
         {
             AddPlaceViewModel model = await fishingPlaces.GetAddModelAsync();
             return View(model);
         }
+        [Authorize(Roles = AdminRoleName)]
         [HttpPost]
         public async Task<IActionResult> AddFishingPlace(AddPlaceViewModel model)
         {
@@ -65,6 +68,7 @@ namespace FishingMania.Controllers
             await fishingPlaces.AddPlaceAsync(model, userId);
             return RedirectToAction(nameof(FishingPlace));
         }
+        [Authorize(Roles = AdminRoleName)]
         [HttpGet]
         public async Task<IActionResult> DetailsPlace(Guid id)
         {
@@ -84,6 +88,7 @@ namespace FishingMania.Controllers
 
             return View(model);
         }
+        [Authorize(Roles = AdminRoleName)]
         [HttpPost]
         public async Task<IActionResult> DetailsPlace(Guid id, DetailViewModel model)
         {
@@ -105,6 +110,7 @@ namespace FishingMania.Controllers
 
             return RedirectToAction(nameof(FishingPlace));
         }
+        [Authorize(Roles = AdminRoleName)]
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
         {
@@ -123,6 +129,7 @@ namespace FishingMania.Controllers
 
             return View(model);
         }
+        [Authorize(Roles = AdminRoleName)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id, DeleteViewModel model)

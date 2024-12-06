@@ -1,9 +1,9 @@
 ﻿using FishingMania.Data.Interface;
-using FishingMania.Data.Models;
-using FishingMania.Models;
 using FishingMania.Models.HotelModels;
 using FishingMania.Services.Data.Models.HotelModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using static FishingMania.Common.ValidationConstant;
 
 
 namespace FishingMania.Controllers
@@ -38,18 +38,20 @@ namespace FishingMania.Controllers
                 CurrentPage = currentPage,
                 TotalPages = totalPage,
             };
-            if (totalhotelsCount == 0)
-            {
-                return RedirectToAction(nameof(AddHotel));
-            }
+            //if (totalhotelsCount == 0)
+            //{
+            //    return RedirectToAction(nameof(AddHotel));
+            //}
             return View(Model);
         }
+        [Authorize(Roles = AdminRoleName)]
         [HttpGet]
         public async Task<IActionResult> AddHotel(Guid Id)
         {
 
             return  View();
         }
+        [Authorize(Roles = AdminRoleName)]
         [HttpPost]
         public async Task<IActionResult> AddHotel(AddHotelViewModel model, Guid Id)
         {
@@ -62,6 +64,7 @@ namespace FishingMania.Controllers
             await hotels.AddHotelAsync(model, userId, Id);
             return RedirectToAction(nameof(Hotels));
         }
+        [Authorize(Roles = AdminRoleName)]
         [HttpGet]
         public async Task<IActionResult> DetailHotel(Guid id)
         {
@@ -81,6 +84,7 @@ namespace FishingMania.Controllers
 
             return View(model);
         }
+        [Authorize(Roles = AdminRoleName)]
         [HttpPost]
         public async Task<IActionResult> DetailHotel(Guid id, HotelDetailViewModel model)
         {
@@ -102,6 +106,7 @@ namespace FishingMania.Controllers
 
             return RedirectToAction(nameof(Hotels));
         }
+        [Authorize(Roles = AdminRoleName)]
         [HttpGet]
         public async Task<IActionResult> DeleteHotel(Guid id)
         {
@@ -120,6 +125,7 @@ namespace FishingMania.Controllers
 
             return View(model);
         }
+        [Authorize(Roles = AdminRoleName)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id, DeleteHotelViewModel model)
