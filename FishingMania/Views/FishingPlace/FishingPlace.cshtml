@@ -1,6 +1,7 @@
 ﻿@using static FishingMania.Common.ValidationConstant;
 @model FishingPlaceViewModelList
 
+
 @if (Model == null || Model.List.Count == 0 || Model.List == null)
 {
     <h2>No fishing place now avaible</h2>
@@ -25,9 +26,31 @@ else
                 </div>
                 @if (User.IsInRole(AdminRoleName))
                 {
-                    <a asp-controller="AddHotel" asp-action="AddHotel" asp-route-id="@fishingPlace.Id" class="btn btn-primary">Hotels</a>
-                    <a asp-controller="AddCar" asp-action="AddCar" asp-route-id="@fishingPlace.Id" class="btn btn-primary">Cars</a>
-                    <a asp-controller="AddEvent" asp-action="AddEvent" asp-route-id="@fishingPlace.Id" class="btn btn-primary">Events</a>
+                    <div class="row">
+                        <div class="col text-left">
+                            <a asp-controller="Hotel" asp-action="AddHotel" asp-route-id="@fishingPlace.Id" class="btn btn-success">AddHotels</a>
+                        </div>
+                        <div class="col text-left">
+                            <a asp-controller="Car" asp-action="AddCar" asp-route-id="@fishingPlace.Id" class="btn btn-warning">AddCars</a>
+                        </div>
+                        <div class="col text-left">
+                            <a asp-controller="Event" asp-action="AddEvent" asp-route-id="@fishingPlace.Id" class="btn btn-info">AddEvents</a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col text-left">
+                            <a asp-controller="Hotel" asp-action="Hotels" asp-route-id="@fishingPlace.Id" class="btn btn-success">Hotels</a>
+                        </div>
+                        <div class="col text-left">
+                            <a asp-controller="Car" asp-action="Cars" asp-route-id="@fishingPlace.Id" class="btn btn-warning">Cars</a>
+                        </div>
+                        <div class="col text-left">
+                            <a asp-controller="Event" asp-action="Events" asp-route-id="@fishingPlace.Id" class="btn btn-info">Events</a>
+                        </div>
+                        <div>
+                            Admin panel <a href="/Admin"><b>Admin</b></a>
+                        </div>
+                    </div>
                 }
                 else{
                     <div class="row">
