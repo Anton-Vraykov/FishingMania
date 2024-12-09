@@ -23,6 +23,7 @@ namespace FishingMania
             string adminEmail = builder.Configuration.GetValue<string>("Administrator:Email")!;
             string adminUsername = builder.Configuration.GetValue<string>("Administrator:Username")!;
             string adminPassword = builder.Configuration.GetValue<string>("Administrator:Password")!;
+            string adminId = builder.Configuration.GetValue<string>("Administrator:Id")!;
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -98,10 +99,13 @@ namespace FishingMania
             using (var scope = app.Services.CreateScope())
             {
                 var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
-                
-                if(userManager.FindByEmailAsync(adminEmail) != null)
+                var admId = await userManager.FindByIdAsync(adminId);
+
+
+                if (admId.Id != null)
                 {
                     var user = new IdentityUser();
+                    user.Id = adminId;
                     user.Email = adminEmail;
                     user.UserName = adminUsername;
                     await userManager.CreateAsync(user, adminPassword);

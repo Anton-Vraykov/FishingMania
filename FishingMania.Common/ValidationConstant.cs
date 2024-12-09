@@ -16,7 +16,7 @@ namespace FishingMania.Common
         public const int PlaceNameMin = 3;
         public const int PlaceLocationMax = 100;
         public const int PlaceLocationMin = 3;
-        public const int PlaceDescriptionMax = 100;
+        public const int PlaceDescriptionMax = 1000;
         public const int PlaceDescriptionMin = 3;
 
 
