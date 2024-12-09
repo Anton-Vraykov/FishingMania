@@ -18,6 +18,7 @@ namespace FishingMania.Services.Data.Interface_and_services.Cars
         public async Task<List<Car>> ShowAllCarAsync(int skip, int take)
         {
             return await this.db.Cars.Where(x => !x.IsDeleted).OrderByDescending(x => x.Id).Skip(skip).Take(take).ToListAsync();
+
         }
         public int GetCarCountAsync() => this.db.Cars.Where(fp => !fp.IsDeleted).Count();
         public CarViewModel GetCarViewModel(Car car)
@@ -38,12 +39,19 @@ namespace FishingMania.Services.Data.Interface_and_services.Cars
         public List<CarViewModel> GetCarsViewModel(List<Car> source)
         {
             var cars = new List<CarViewModel>();
-
-
-            foreach (var car in source)
+            try
             {
-                cars.Add(GetCarViewModel(car));
+                foreach (var car in source)
+                {
+                    cars.Add(GetCarViewModel(car));
+                }
             }
+            catch (Exception)
+            {
+
+                throw new Exception("Bad Car Model");
+            }
+            
 
             return cars;
         }
@@ -54,21 +62,34 @@ namespace FishingMania.Services.Data.Interface_and_services.Cars
             {
                 return;
             }
-            var carData = new Car
+            if (car.AvelableCars<0)
+            {
+                return;
+            }
+            try
+            {
+                var carData = new Car
+                {
+
+                    Model = car.Model,
+                    Details = car.Details,
+                    PictureURL = car.PictureURL,
+                    Location = car.Location,
+                    UserId = userId,
+                    Price = car.Price,
+                    AvelableCars = car.AvelableCars,
+                    FishingPlaceId = Id
+
+                };
+                await db.Cars.AddAsync(carData);
+                await db.SaveChangesAsync();
+            }
+            catch (Exception)
             {
 
-                Model = car.Model,
-                Details = car.Details,
-                PictureURL = car.PictureURL,
-                Location = car.Location,
-                UserId = userId,
-                Price = car.Price,
-                AvelableCars = car.AvelableCars,
-                FishingPlaceId = Id
-
-            };
-            await db.Cars.AddAsync(carData);
-            await db.SaveChangesAsync();
+                throw new Exception("The Car can not added");
+            }
+            
         }
 
         public async Task<CarDetailViewModel> GetEditCarModelAsync(Guid id)

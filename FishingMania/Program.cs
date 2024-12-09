@@ -102,7 +102,7 @@ namespace FishingMania
                 var admId = await userManager.FindByIdAsync(adminId);
 
 
-                if (admId.Id == null)
+                if (admId == null)
                 {
                     var user = new IdentityUser();
                     user.Id = adminId;

@@ -23,6 +23,10 @@ namespace FishingMania.Services.Data.Interface_and_services.Events
             {
                 return;
             }
+            if (place.FreePlace < 0)
+            {
+                return;
+            }
             var placeData = new Event
             {
 
