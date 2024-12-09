@@ -12,9 +12,13 @@ namespace FishingMania.Data.Models
         [MaxLength(ValidationConstant.EventNameMax)]
         public string Name { get; set; } = string.Empty;
         public int FreePlace { get; set; }
+        [Required]
+        [MaxLength(ValidationConstant.EventLocationMax)]
         public string Location { get; set; } = string.Empty;
         [Required]
+        [MaxLength(ValidationConstant.EventDescriptionMax)]
         public string Description { get; set; } = string.Empty;
+        [Required]
         public string ImageURL { get; set; } = string.Empty;
         public string UserId { get; set; } = string.Empty;
         public double Price { get; set; }

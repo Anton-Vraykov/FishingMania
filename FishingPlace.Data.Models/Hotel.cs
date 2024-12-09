@@ -12,7 +12,10 @@ namespace FishingMania.Data.Models
         [Required]
         [MaxLength(HotelNameMax)]
         public string Name { get; set; } = string.Empty;
+        [Required]
         public string PictureURL { get; set; } = string.Empty;
+        [Required]
+        [MaxLength(HotelLocationMax)]
         public string Location { get; set; } = string.Empty;
         public string UserId { get; set; } = string.Empty;
 
