@@ -108,7 +108,7 @@ namespace FishingMania.Services.Data.Interface_and_services.Hotels
             var hotel= await db.Hotels.Where(h=>h.IsDeleted == false).FirstOrDefaultAsync(h=>h.Id==id);
             if (hotel == null)
             {
-                throw new ArgumentException("There is no hotel ");
+                throw new Exception("There is no hotel");
             }
             return hotel;
         }

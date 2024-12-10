@@ -118,7 +118,7 @@ namespace FishingMania.Services.Data.Interface_and_services.Cars
             var car = await db.Cars.Where(c => c.IsDeleted == false).FirstOrDefaultAsync(c => c.Id == id);
             if (car == null)
             {
-                throw new ArgumentException("There is no car ");
+                throw new Exception("There is no car");
             }
             return car;
         }

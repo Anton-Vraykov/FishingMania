@@ -105,7 +105,7 @@ namespace FishingMania.Services.Data.Interface_and_services.Events
             var even = await db.Events.Where(h => h.IsDeleted == false).FirstOrDefaultAsync(h => h.Id == id);
             if (even == null)
             {
-                throw new ArgumentException("There is no events ");
+                throw new Exception("There is no events");
             }
             return even;
         }
