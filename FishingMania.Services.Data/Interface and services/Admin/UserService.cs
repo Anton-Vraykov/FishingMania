@@ -17,11 +17,11 @@ namespace FishingMania.Services.Data.Interface_and_services.Admin
         public async Task<IEnumerable<UserManagementViewModel>> GetAllUsersAsync()
         {
             IEnumerable<IdentityUser> allUser=await userManager.Users.ToArrayAsync();
-            ICollection<UserManagementViewModel> allUsersVoewModel=new List<UserManagementViewModel>();
+            ICollection<UserManagementViewModel> allUsersViewModel=new List<UserManagementViewModel>();
             foreach (IdentityUser user in allUser)
             {
-                IEnumerable< string> role=await userManager.GetRolesAsync(user);
-                allUsersVoewModel.Add(new UserManagementViewModel()
+                IEnumerable<string> role=await userManager.GetRolesAsync(user);
+                allUsersViewModel.Add(new UserManagementViewModel()
                 {
                     Id = user.Id,
                     Email = user.Email,
@@ -29,7 +29,7 @@ namespace FishingMania.Services.Data.Interface_and_services.Admin
                 });
                 
             }
-            return allUsersVoewModel;
+            return allUsersViewModel;
         }
         public async Task<bool> UserExistsByIdAsync(string userId)
         {
