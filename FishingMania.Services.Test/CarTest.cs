@@ -88,7 +88,7 @@ namespace FishingMania.Services.Test
         public async Task ShowAllPlaceAsync()
         {
            
-            var result = await carService.ShowAllCarAsync(0, 10);
+            var result = await carService.ShowAllCarAsync(0, 10, Guid.Empty);
 
             
             Assert.AreEqual(2, result.Count / 3);

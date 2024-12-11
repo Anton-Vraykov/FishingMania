@@ -91,7 +91,7 @@ namespace FishingMania.Services.Test
         public async Task ShowAllPlaceAsync()
         {
             // Act
-            var result = await hotelService.ShowAllPlaceAsync(0, 10);
+            var result = await hotelService.ShowAllPlaceAsync(0, 10, Guid.Empty);
 
             // Assert
             Assert.AreEqual(2, result.Count / 3);

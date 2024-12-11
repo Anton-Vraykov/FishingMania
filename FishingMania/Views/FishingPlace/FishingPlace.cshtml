@@ -1,6 +1,29 @@
 ﻿@using static FishingMania.Common.ValidationConstant;
 @model FishingPlaceViewModelList
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .fishing-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
 
+        .custom-btn {
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+
+            .custom-btn:hover {
+                background-color: #0056b3;
+                transform: scale(1.05);
+            }
+
+    </style>
+    </head>
+    <body>
 <div class="text-center">
     <h2>
         FISHING PLACES
@@ -124,7 +147,11 @@ else
 
         </ul>
     </nav>
-}
+    }
+    
+</body>
+
+</html>
 <script>
     const loadFishingPlace = (Id) => {
         window.location = '/FishingPlace/DetailsPlace?Id=' + Id;
