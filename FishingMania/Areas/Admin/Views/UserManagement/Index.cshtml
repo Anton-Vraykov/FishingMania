@@ -12,57 +12,76 @@
 }
 
 <div class="container mt-5">
-    <h1 class="text-center mb-4">User Management</h1>
+    <h1 class="text-center mb-4 text-primary">User Management</h1>
 
-    <table class="table table-bordered table-hover">
-        <thead class="thead-light">
-            <tr>
-                <th>Email</th>
-                <th>Roles</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var user in Model)
-            {
+   
+    <div class="table-responsive">
+        <table class="table table-hover table-striped">
+            <thead class="thead-light">
                 <tr>
-                    <td>@user.Email</td>
-                    <td>
-                        @foreach (var role in user.Roles)
-                        {
-                            <span class="badge bg-secondary">@role</span>
-                        }
-                    </td>
-                    <td>
-                        <form method="post" asp-action="AssignRole" asp-controller="UserManagement" asp-area="Admin" class="d-inline">
-                            <input type="hidden" name="userId" value="@user.Id" />
-                            <select name="role" class="form-select d-inline w-auto">
-                                @foreach (string role in allRoles)
-                                {
-                                    <option value="@role">@role</option>
-                                }
-                            </select>
-                            <button type="submit" class="btn btn-primary btn-sm">Assign Role</button>
-                        </form>
-
-                        <form method="post" asp-action="RemoveRole" asp-controller="UserManagement" asp-area="Admin" class="d-inline ms-2">
-                            <input type="hidden" name="userId" value="@user.Id" />
-                            <select name="role" class="form-select d-inline w-auto">
-                                @foreach (var role in user.Roles)
-                                {
-                                    <option value="@role">@role</option>
-                                }
-                            </select>
-                            <button type="submit" class="btn btn-warning btn-sm">Remove Role</button>
-                        </form>
-
-                        <form method="post" asp-action="DeleteUser" asp-controller="UserManagement" asp-area="Admin" class="d-inline ms-2">
-                            <input type="hidden" name="userId" value="@user.Id" />
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                        </form>
-                    </td>
+                    <th>Email</th>
+                    <th>Roles</th>
+                    <th>Actions</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>@user.Email</td>
+                        <td>
+                            @foreach (var role in user.Roles)
+                            {
+                                <span class="badge bg-secondary mb-1">@role</span>
+                            }
+                        </td>
+                        <td>
+                            
+                            <form method="post" asp-action="AssignRole" asp-controller="UserManagement" asp-area="Admin" class="d-inline-block mb-2">
+                                <input type="hidden" name="userId" value="@user.Id" />
+                                <div class="input-group">
+                                    <select name="role" class="form-select form-select-sm d-inline-block w-auto">
+                                        @foreach (string role in allRoles)
+                                        {
+                                            <option value="@role">@role</option>
+                                        }
+                                    </select>
+                                    <button type="submit" class="btn btn-primary btn-sm ms-2" title="Assign Role">
+                                        <i class="fas fa-user-plus"></i> Assign
+                                    </button>
+                                </div>
+                            </form>
+
+                            <form method="post" asp-action="RemoveRole" asp-controller="UserManagement" asp-area="Admin" class="d-inline-block mb-2 ms-2">
+                                <input type="hidden" name="userId" value="@user.Id" />
+                                <div class="input-group">
+                                    <select name="role" class="form-select form-select-sm d-inline-block w-auto">
+                                        @foreach (var role in user.Roles)
+                                        {
+                                            <option value="@role">@role</option>
+                                        }
+                                    </select>
+                                    <button type="submit" class="btn btn-warning btn-sm ms-2" title="Remove Role">
+                                        <i class="fas fa-user-slash"></i> Remove
+                                    </button>
+                                </div>
+                            </form>
+
+                        
+                            <form method="post" asp-action="DeleteUser" asp-controller="UserManagement" asp-area="Admin" class="d-inline-block ms-2">
+                                <input type="hidden" name="userId" value="@user.Id" />
+                                <button type="submit" class="btn btn-danger btn-sm" title="Delete User">
+                                    <i class="fas fa-trash-alt"></i> Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+

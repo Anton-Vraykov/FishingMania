@@ -2,33 +2,66 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div onclick="window.location='/Home/FishingMania'" id="fishingPlace1-container" class="text-center">
-    <div class="p-3 mb-2 bg-dark text-white"><b>FISHING MANIA</b></div>
-</div>
-<div class="text-center">
-    <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/22/df/c6/dc/caption.jpg?w=700&h=-1&s=1" class="img-fluid" alt="Responsive image">
-</div>
 
-<div class="text-center">
-    <div class="p-3 mb-2 bg-success text-white">
-        Fishing Mania is a community club bringing together like-minded
-        people in a safe and friendly environment. The FM has a strong family focus and encourages family fishing and education of
-        junior anglers in safe and enjoyable fishing practices.  The FM also hosts monthly club events for fishing enthusiasts to
-        compete for club points and the coveted annual Angler of the Year.
+<div onclick="window.location='/Home/FishingMania'" id="fishingPlace1-container" class="text-center mb-5">
+    <div class="p-4 mb-3 bg-dark text-white rounded-5 shadow-lg">
+        <h2 class="fw-bold mb-0">FISHING MANIA</h2>
+        <p class="lead mb-0">Where the passion for fishing comes alive!</p>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-2">
-        <div class="p-3 mb-2 bg-white text-dark">
-            <b>
-                Address:
-                Stara Zagora
-            </b>
+
+
+<div class="text-center mb-5">
+    <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/22/df/c6/dc/caption.jpg?w=700&h=-1&s=1" class="img-fluid rounded-3 shadow-lg" alt="Fishing Mania Banner">
+</div>
+
+
+<div class="text-center mb-5">
+    <div class="p-5 mb-3 bg-success text-white rounded-4 shadow-lg">
+        <p class="lead mb-0">
+            <strong>Fishing Mania</strong> is a community club bringing together like-minded people in a safe and friendly environment. With a strong family focus, we encourage family fishing and educate junior anglers in safe and enjoyable fishing practices. We also host monthly club events where fishing enthusiasts compete for club points and the coveted <em>Annual Angler of the Year</em> award.
+        </p>
+    </div>
+</div>
+
+
+<div class="row mb-5">
+    <div class="col-md-6 mb-4 mb-md-0">
+        <div class="p-4 mb-2 bg-white text-dark rounded-4 shadow-sm hover-shadow">
+            <h5 class="fw-bold">Address:</h5>
+            <p>Stara Zagora</p>
         </div>
     </div>
 
-    <div class="col text-right">
-        <div class="p-3 mb-2 bg-white text-dark"><b>GSM: 088********</b></div>
+    <div class="col-md-6 text-md-end">
+        <div class="p-4 mb-2 bg-white text-dark rounded-4 shadow-sm hover-shadow">
+            <h5 class="fw-bold">GSM:</h5>
+            <p>088********</p>
+        </div>
     </div>
-
 </div>
+
+
+<style>
+  
+    .hover-shadow:hover {
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        transform: translateY(-5px);
+        transition: all 0.3s ease-in-out;
+    }
+
+   
+    #fishingPlace1-container .fw-bold {
+        font-size: 2.5rem;
+    }
+
+    
+    .container {
+        padding: 0 15px;
+    }
+
+    
+    .img-fluid {
+        border-radius: 1rem;
+    }
+</style>

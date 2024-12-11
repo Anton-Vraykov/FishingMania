@@ -1,54 +1,119 @@
-﻿
-<div class="text-center">
-    <div class="p-3 mb-2 bg-dark text-white"><b>FISHING MANIA</b></div>
-    <div class="p-3 mb-2 bg-light text-dark">
-        <b>
-            The Club Mania is a community club bringing together like-minded
-            people in a safe and friendly environment. The FCM has a strong family focus and encourages family fishing and education of
-            junior anglers in safe and enjoyable fishing practices.  The FM also hosts monthly club events for fishing enthusiasts to
-            compete for club points and the coveted annual Angler of the Year.
-        </b>
+﻿<div class="container mt-5">
+
+  
+    <div class="text-center mb-5">
+        <div class="p-4 mb-3 bg-dark text-white rounded-5 shadow-lg">
+            <h2 class="fw-bold mb-0">FISHING MANIA</h2>
+            <p class="lead mb-0">A community of passionate anglers!</p>
+        </div>
     </div>
-</div>
-<div> </div>
-<div class="row bg-light text-dark">
-    <div class="col-md-3">
-        <b>ADDRESS:  </b>
+
+   
+    <div class="text-center mb-5">
+        <div class="p-5 mb-3 bg-light text-dark rounded-4 shadow-lg">
+            <p class="lead mb-0">
+                <strong>The Club Mania</strong> is a community club bringing together like-minded people in a safe and friendly environment. The FCM has a strong family focus and encourages family fishing and education of junior anglers in safe and enjoyable fishing practices. We also host monthly club events for fishing enthusiasts to compete for club points and the coveted annual Angler of the Year award.
+            </p>
+        </div>
     </div>
-    <div class="col-md-9">
-        City Stara Zagota, Bul. Sveti Patriarh Evtimiy
-    </div>
-</div>
-<div> </div>
-<div class="row bg-light text-dark">
-    <div class="col-md-3">
-        <b>GSM:  </b>
-    </div>
-    <div class="col-md-9">
-        088**********
-    </div>
-</div>
-<div> </div>
-<div class="row bg-light text-dark">
-    <div class="col-md-3">
-        <b>BANK ACOUNT:  </b>
-    </div>
-    <div class="col-md-9">
-        BG*************
-    </div>
-</div>
-<div>
-    <div class="row bg-light text-dark">
+
+  
+    <div class="row mb-4">
         <div class="col-md-3">
-            <b> . </b>
+            <b class="text-primary">ADDRESS:</b>
+        </div>
+        <div class="col-md-9">
+            <p>City Stara Zagora, Bul. Sveti Patriarh Evtimiy</p>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <b class="text-primary">GSM:</b>
+        </div>
+        <div class="col-md-9">
+            <p>088**********</p>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <b class="text-primary">BANK ACCOUNT:</b>
+        </div>
+        <div class="col-md-9">
+            <p>BG*************</p>
+        </div>
+    </div>
+
+   
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <b>.</b>
+        </div>
+    </div>
+
+    
+    <div onclick="window.location='https://maps.app.goo.gl/i7Ynf6oQ1GRHHnp76'" id="fishingPlace-container" class="row mb-5 bg-light text-dark rounded-4 shadow-sm hover-shadow">
+        <div class="col-md-3">
+            <b class="text-primary">LOCATION:</b>
+        </div>
+        <div class="col-md-9">
+            <img src="~/PIC/Location.png" class="img-fluid rounded-3 shadow-sm" alt="Fishing Location" />
         </div>
     </div>
 </div>
-<div onclick="window.location='https://maps.app.goo.gl/i7Ynf6oQ1GRHHnp76'" id="fishingPlace-container" class="row bg-light text-dark">
-    <div class="col-md-3">
-        <b>LOCATION:  </b>
-    </div>
-    <div class="col-md-9">
-        <img src="~/PIC/Location.png" class="img-thumbnail" />
-    </div>
-</div>
+
+
+<style>
+    
+    .row:hover {
+        background-color: #f9f9f9;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        transform: translateY(-5px);
+        transition: all 0.3s ease-in-out;
+    }
+
+    
+    #fishingPlace-container:hover {
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    }
+
+    
+    .img-fluid {
+        border-radius: 1rem;
+        transition: all 0.3s ease-in-out;
+    }
+
+        .img-fluid:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+    
+    .container {
+        padding: 0 15px;
+    }
+
+    
+    b.text-primary {
+        color: #007bff;
+        font-size: 1.1rem;
+    }
+
+   
+    .lead {
+        font-size: 1.2rem;
+    }
+
+    
+    .row {
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+
+    
+    .container .text-center {
+        padding-top: 20px;
+    }
+</style>
