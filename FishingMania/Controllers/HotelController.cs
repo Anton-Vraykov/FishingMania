@@ -18,14 +18,20 @@ namespace FishingMania.Controllers
             this.hotels = hotels;
 
         }
-        public async Task<IActionResult> Hotels(int currentPage = 1)
-        {
 
+        
+        public async Task<IActionResult> Hotels(int currentPage,Guid Id)
+        {
+           
+            if(currentPage==0)
+            {
+                currentPage = 1;
+            }            
             var skip = (currentPage - 1) * 3;
             var take = 3;
             var totalhotelsCount = this.hotels.GetHotelCountAsync();
 
-            var hotels = await this.hotels.ShowAllPlaceAsync(skip, take);
+            var hotels = await this.hotels.ShowAllPlaceAsync(skip, take,Id);
             var totalPage = totalhotelsCount / 3;
             var totalPages = totalhotelsCount % 3;
             if (totalPages > 0)
@@ -38,10 +44,7 @@ namespace FishingMania.Controllers
                 CurrentPage = currentPage,
                 TotalPages = totalPage,
             };
-            //if (totalhotelsCount == 0)
-            //{
-            //    return RedirectToAction(nameof(AddHotel));
-            //}
+           
             return View(Model);
         }
         [Authorize(Roles = AdminRoleName)]

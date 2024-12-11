@@ -15,9 +15,16 @@ namespace FishingMania.Services.Data.Interface_and_services.Cars
         {
             this.db = db;
         }
-        public async Task<List<Car>> ShowAllCarAsync(int skip, int take)
+        public async Task<List<Car>> ShowAllCarAsync(int skip, int take,Guid Id)
         {
-            return await this.db.Cars.Where(x => !x.IsDeleted).OrderByDescending(x => x.Id).Skip(skip).Take(take).ToListAsync();
+            if (Id == Guid.Empty)
+            {
+                return await this.db.Cars.Where(x => !x.IsDeleted).OrderByDescending(x => x.Id).Skip(skip).Take(take).ToListAsync();
+            }
+            else
+            {
+                return await this.db.Cars.Where(x => !x.IsDeleted).Where(x => x.FishingPlaceId == Id).OrderByDescending(x => x.Id).Skip(skip).Take(take).ToListAsync();
+            }
 
         }
         public int GetCarCountAsync() => this.db.Cars.Where(fp => !fp.IsDeleted).Count();

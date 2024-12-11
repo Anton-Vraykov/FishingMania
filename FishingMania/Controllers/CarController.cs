@@ -17,14 +17,17 @@ namespace FishingMania.Controllers
             this.cars = cars;
 
         }
-        public async Task<IActionResult> Cars(int currentPage = 1)
+        public async Task<IActionResult> Cars(int currentPage, Guid Id)
         {
-
+            if (currentPage == 0)
+            {
+                currentPage = 1;
+            }
             var skip = (currentPage - 1) * 3;
             var take = 3;
             var totalCarsCount = this.cars.GetCarCountAsync();
 
-            var cars = await this.cars.ShowAllCarAsync(skip, take);
+            var cars = await this.cars.ShowAllCarAsync(skip, take,Id);
             var totalPage = totalCarsCount / 3;
             var totalPages = totalCarsCount % 3;
             if (totalPages > 0)

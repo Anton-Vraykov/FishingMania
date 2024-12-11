@@ -18,9 +18,17 @@ namespace FishingMania.Services.Data.Interface_and_services.Hotels
         {
             this.db = db;
         }
-        public async Task<List<Hotel>> ShowAllPlaceAsync(int skip, int take)
+        public async Task<List<Hotel>> ShowAllPlaceAsync(int skip, int take, Guid Id)
         {
-           return await this.db.Hotels.Where(x => !x.IsDeleted).OrderByDescending(x => x.Id).Skip(skip).Take(take).ToListAsync();
+            if(Id==Guid.Empty)
+            {
+                return await this.db.Hotels.Where(x => !x.IsDeleted).OrderByDescending(x => x.Id).Skip(skip).Take(take).ToListAsync();
+            }
+            else
+            {
+                return await this.db.Hotels.Where(x => !x.IsDeleted).Where(x => x.FishingPlaceId == Id).OrderByDescending(x => x.Id).Skip(skip).Take(take).ToListAsync();
+            }
+   
         }
         public int GetHotelCountAsync() => this.db.Hotels.Where(fp => !fp.IsDeleted).Count();
 

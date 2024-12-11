@@ -9,7 +9,7 @@ namespace FishingMania.Services.Data.Interface_and_services.Cars
 {
     public interface ICar
     {
-        Task<List<Car>> ShowAllCarAsync(int skip, int take);
+        Task<List<Car>> ShowAllCarAsync(int skip, int take, Guid Id);
         public int GetCarCountAsync();
         List<CarViewModel> GetCarsViewModel(List<Car> source);
         CarViewModel GetCarViewModel(Car car);
