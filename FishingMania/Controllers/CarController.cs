@@ -74,10 +74,7 @@ namespace FishingMania.Controllers
 
             string userId = GetUserId();
 
-            if (model.UserId != userId)
-            {
-                return Unauthorized();
-            }
+            
 
             return View(model);
         }
@@ -93,11 +90,6 @@ namespace FishingMania.Controllers
             }
 
             string userId = GetUserId();
-
-            if (car.UserId != userId)
-            {
-                return Unauthorized();
-            }
 
             await cars.EditCarAsync(carmodel, car);
 

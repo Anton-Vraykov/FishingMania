@@ -75,10 +75,7 @@ namespace FishingMania.Controllers
 
             string userId = GetUserId();
 
-            if (model.UserId != userId)
-            {
-                return Unauthorized();
-            }
+            
 
             return View(model);
         }
@@ -95,10 +92,7 @@ namespace FishingMania.Controllers
 
             string userId = GetUserId();
 
-            if (even.UserId != userId)
-            {
-                return Unauthorized();
-            }
+           
 
             await events.EditEventAsync(model, even);
 

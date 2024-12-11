@@ -77,10 +77,7 @@ namespace FishingMania.Controllers
 
             string userId = GetUserId();
 
-            if (model.UserId != userId)
-            {
-                return Unauthorized();
-            }
+           
 
             return View(model);
         }
@@ -97,10 +94,7 @@ namespace FishingMania.Controllers
 
             string userId = GetUserId();
 
-            if (hotel.UserId != userId)
-            {
-                return Unauthorized();
-            }
+            
 
             await hotels.EditHotelAsync(model, hotel);
 
