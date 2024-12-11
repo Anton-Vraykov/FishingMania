@@ -22,7 +22,11 @@ namespace FishingMania.Controllers
 
             return View();
         }
+        public IActionResult Fish_In_Bulgaria()
+        {
 
+            return View();
+        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
