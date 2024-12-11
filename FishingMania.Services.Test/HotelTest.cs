@@ -12,8 +12,8 @@ namespace FishingMania.Services.Test
     public class HotelTest
     {
        
-        private IHotel _hotelService;
-        private List<Hotel> _hotel;
+        private IHotel hotelService;
+        private List<Hotel> hotel;
 
 
         [SetUp]
@@ -24,10 +24,10 @@ namespace FishingMania.Services.Test
                 .UseInMemoryDatabase("FishingManiaTestDb")
                 .Options;
 
-            ApplicationDbContext _context = new ApplicationDbContext(options);
+            ApplicationDbContext context = new ApplicationDbContext(options);
 
 
-            _hotel = new List<Hotel>
+            hotel = new List<Hotel>
             {
                 new Hotel
                 {
@@ -57,20 +57,20 @@ namespace FishingMania.Services.Test
                 }
             };
 
-            _context.Hotels.AddRange(_hotel);
-            _context.SaveChanges();
+            context.Hotels.AddRange(hotel);
+            context.SaveChanges();
 
-            _hotelService = new HotelServices(_context);
+            hotelService = new HotelServices(context);
         }
 
         [Test]
         public async Task GetByIdAsync()
         {
       
-            var hotelId = _hotel[0].Id;
+            var hotelId = hotel[0].Id;
 
             // Act
-            var result = await _hotelService.GetByIdAsync(hotelId);
+            var result = await hotelService.GetByIdAsync(hotelId);
 
             // Assert
             Assert.AreEqual(hotelId, result.Id);
@@ -83,7 +83,7 @@ namespace FishingMania.Services.Test
             var Id = Guid.NewGuid();
 
             // Act & Assert
-            var ex = Assert.ThrowsAsync<Exception>(() => _hotelService.GetByIdAsync(Id));
+            var ex = Assert.ThrowsAsync<Exception>(() => hotelService.GetByIdAsync(Id));
             Assert.AreEqual("There is no hotel", ex.Message);
 
         }
@@ -91,7 +91,7 @@ namespace FishingMania.Services.Test
         public async Task ShowAllPlaceAsync()
         {
             // Act
-            var result = await _hotelService.ShowAllPlaceAsync(0, 10);
+            var result = await hotelService.ShowAllPlaceAsync(0, 10);
 
             // Assert
             Assert.AreEqual(2, result.Count / 3);
@@ -100,10 +100,10 @@ namespace FishingMania.Services.Test
         public async Task DeleteHotelAsync()
         {
             // Arrange
-            var hotel = _hotel[0];
+            var hotel = this.hotel[0];
 
             // Act
-            await _hotelService.DeleteHotelAsync(hotel);
+            await hotelService.DeleteHotelAsync(hotel);
 
             // Assert
             Assert.IsTrue(hotel.IsDeleted);

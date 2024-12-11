@@ -8,8 +8,8 @@ namespace FishingMania.Services.Test
 {
     public class EventTest
     {
-        private IEvent _eventService;
-        private List<Event> _event;
+        private IEvent eventService;
+        private List<Event> events;
 
 
         [SetUp]
@@ -20,10 +20,10 @@ namespace FishingMania.Services.Test
                 .UseInMemoryDatabase("FishingManiaTestDb")
                 .Options;
 
-            ApplicationDbContext _context = new ApplicationDbContext(options);
+            ApplicationDbContext context = new ApplicationDbContext(options);
 
 
-            _event = new List<Event>
+            events = new List<Event>
             {
                 new Event
                 {
@@ -53,20 +53,20 @@ namespace FishingMania.Services.Test
                 }
             };
 
-            _context.Events.AddRange(_event);
-            _context.SaveChanges();
+            context.Events.AddRange(events);
+            context.SaveChanges();
 
-            _eventService = new EventServices(_context);
+            eventService = new EventServices(context);
         }
 
         [Test]
         public async Task GetByIdAsync()
         {
 
-            var eventId = _event[0].Id;
+            var eventId = events[0].Id;
 
 
-            var result = await _eventService.GetByIdAsync(eventId);
+            var result = await eventService.GetByIdAsync(eventId);
 
 
             Assert.AreEqual(eventId, result.Id);
@@ -79,7 +79,7 @@ namespace FishingMania.Services.Test
             var Id = Guid.NewGuid();
 
 
-            var ex = Assert.ThrowsAsync<Exception>(() => _eventService.GetByIdAsync(Id));
+            var ex = Assert.ThrowsAsync<Exception>(() => eventService.GetByIdAsync(Id));
             Assert.AreEqual("There is no events", ex.Message);
 
         }
@@ -87,7 +87,7 @@ namespace FishingMania.Services.Test
         public async Task ShowAllPlaceAsync()
         {
 
-            var result = await _eventService.ShowAllPlaceAsync(0, 10);
+            var result = await eventService.ShowAllPlaceAsync(0, 10);
 
 
             Assert.AreEqual(2, result.Count / 3);
@@ -96,10 +96,10 @@ namespace FishingMania.Services.Test
         public async Task DeleteEventAsync()
         {
 
-            var events = _event[0];
+            var events = this.events[0];
 
 
-            await _eventService.DeleteEventAsync(events);
+            await eventService.DeleteEventAsync(events);
 
 
             Assert.IsTrue(events.IsDeleted);

@@ -4,7 +4,7 @@ using System.Security.Claims;
 
 namespace FishingMania.Controllers
 {
-    [Authorize]
+   
     public class BaseController : Controller
     {
         protected string GetUserId()
@@ -15,7 +15,10 @@ namespace FishingMania.Controllers
             {
                 userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             }
-
+            if(userId == null)
+            {
+                throw new Exception("There is no user");
+            }
             return userId;
         }
     }

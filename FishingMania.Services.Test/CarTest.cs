@@ -9,8 +9,8 @@ namespace FishingMania.Services.Test
     public class CarTest
     {
         
-        private ICar _carService;
-        private List<Car> _car;
+        private ICar carService;
+        private List<Car> car;
 
 
         [SetUp]
@@ -21,10 +21,10 @@ namespace FishingMania.Services.Test
                 .UseInMemoryDatabase("FishingManiaTestDb")
                 .Options;
 
-            ApplicationDbContext _context = new ApplicationDbContext(options);
+            ApplicationDbContext context = new ApplicationDbContext(options);
 
 
-            _car = new List<Car>
+            car = new List<Car>
             {
                 new Car
                 {
@@ -54,20 +54,20 @@ namespace FishingMania.Services.Test
                 }
             };
 
-            _context.Cars.AddRange(_car);
-            _context.SaveChanges();
+            context.Cars.AddRange(car);
+            context.SaveChanges();
 
-            _carService = new CarServices(_context);
+            carService = new CarServices(context);
         }
 
         [Test]
         public async Task GetByIdAsync()
         {
             
-            var carId = _car[0].Id;
+            var carId = car[0].Id;
 
             
-            var result = await _carService.GetByIdAsync(carId);
+            var result = await carService.GetByIdAsync(carId);
 
             
             Assert.AreEqual(carId, result.Id);
@@ -80,7 +80,7 @@ namespace FishingMania.Services.Test
             var Id = Guid.NewGuid();
 
             
-            var ex = Assert.ThrowsAsync<Exception>(() => _carService.GetByIdAsync(Id));
+            var ex = Assert.ThrowsAsync<Exception>(() => carService.GetByIdAsync(Id));
             Assert.AreEqual("There is no car", ex.Message);
 
         }
@@ -88,7 +88,7 @@ namespace FishingMania.Services.Test
         public async Task ShowAllPlaceAsync()
         {
            
-            var result = await _carService.ShowAllCarAsync(0, 10);
+            var result = await carService.ShowAllCarAsync(0, 10);
 
             
             Assert.AreEqual(2, result.Count / 3);
@@ -97,10 +97,10 @@ namespace FishingMania.Services.Test
         public async Task DeleteHotelAsync()
         {
             
-            var car = _car[0];
+            var car = this.car[0];
 
           
-            await _carService.DeleteCarAsync(car);
+            await carService.DeleteCarAsync(car);
 
             
             Assert.IsTrue(car.IsDeleted);

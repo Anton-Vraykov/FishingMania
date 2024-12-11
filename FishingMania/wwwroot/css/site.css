@@ -1,6 +1,29 @@
 
+#fishingPlace-container {
+    background-color: palegreen
+}
+
 #fishingPlace1-container {
     background-color: black
+}
+#fishingPlace12-container {
+    background-color: black
+}
+
+#fishingPlace-container:hover {
+    background-color: #ffddcc;
+    cursor: pointer;
+}
+
+#fishingPlace1-container:hover {
+    background-color: white;
+    cursor: pointer;
+}
+
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
 }
 
 html {

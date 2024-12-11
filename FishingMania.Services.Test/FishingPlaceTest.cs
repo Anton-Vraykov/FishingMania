@@ -11,8 +11,8 @@ namespace FishingMania.Services.Test
     public class FishingPlaceServicesTests
     {
        
-        private IFishingPlace _fishingPlaceService;
-        private List<FishingPlace> _fishingPlaces;
+        private IFishingPlace fishingPlaceService;
+        private List<FishingPlace> fishingPlaces;
         
 
         [SetUp]
@@ -23,10 +23,10 @@ namespace FishingMania.Services.Test
                 .UseInMemoryDatabase("FishingManiaTestDb")
                 .Options;
 
-            ApplicationDbContext _context = new ApplicationDbContext(options);
+            ApplicationDbContext context = new ApplicationDbContext(options);
 
            
-            _fishingPlaces = new List<FishingPlace>
+            fishingPlaces = new List<FishingPlace>
             {
                 new FishingPlace
                 {
@@ -52,20 +52,20 @@ namespace FishingMania.Services.Test
                 }
             };
 
-            _context.FishingPlaces.AddRange(_fishingPlaces);
-            _context.SaveChanges();
+            context.FishingPlaces.AddRange(fishingPlaces);
+            context.SaveChanges();
 
-            _fishingPlaceService = new FishingPlaceServices(_context);
+            fishingPlaceService = new FishingPlaceServices(context);
         }
 
         [Test]
         public async Task GetByIdAsync()
         {
            
-            var fishingPlaceId = _fishingPlaces[0].Id;
+            var fishingPlaceId = fishingPlaces[0].Id;
 
             
-            var result = await _fishingPlaceService.GetByIdAsync(fishingPlaceId);
+            var result = await fishingPlaceService.GetByIdAsync(fishingPlaceId);
 
             
             Assert.AreEqual(fishingPlaceId, result.Id);
@@ -78,7 +78,7 @@ namespace FishingMania.Services.Test
             var Id = Guid.NewGuid();
 
            
-            var ex = Assert.ThrowsAsync<Exception>(() => _fishingPlaceService.GetByIdAsync(Id));
+            var ex = Assert.ThrowsAsync<Exception>(() => fishingPlaceService.GetByIdAsync(Id));
             Assert.AreEqual("There is no FishingPlace", ex.Message);
             
         }
@@ -86,7 +86,7 @@ namespace FishingMania.Services.Test
         public async Task ShowAllPlaceAsync()
         {
            
-            var result = await _fishingPlaceService.ShowAllPlaceAsync(0, 10);
+            var result = await fishingPlaceService.ShowAllPlaceAsync(0, 10);
 
             
             Assert.AreEqual(2, result.Count/3);
@@ -95,10 +95,10 @@ namespace FishingMania.Services.Test
         public async Task DeleteFishingPlaceAsync()
         {
             
-            var fishingPlace = _fishingPlaces[0];
+            var fishingPlace = fishingPlaces[0];
 
            
-            await _fishingPlaceService.DeleteFishingPlaceAsync(fishingPlace);
+            await fishingPlaceService.DeleteFishingPlaceAsync(fishingPlace);
 
            
             Assert.IsTrue(fishingPlace.IsDeleted);

@@ -11,10 +11,15 @@ namespace FishingMania.Controllers
 
         public IActionResult Index()
         {
-            if (User?.Identity?.IsAuthenticated ?? false)
-            {
-                return RedirectToAction("FishingPlace", "FishingPlace");
-            }
+            //if (User?.Identity?.IsAuthenticated ?? false)
+            //{
+            //    return RedirectToAction("FishingPlace", "FishingPlace");
+            //}
+            return View();
+        }
+        public IActionResult FishingMania()
+        {
+
             return View();
         }
 

@@ -8,14 +8,14 @@ namespace FishingMania.Services.Test
     [TestFixture]
     public class UserTests
     {
-        private Mock<UserManager<IdentityUser>> _mockUserManager;
-        private UserService _userService;
+        private Mock<UserManager<IdentityUser>> mockUserManager;
+        private UserService userService;
 
         [SetUp]
         public void Setup()
         {
             
-            _mockUserManager = new Mock<UserManager<IdentityUser>>(
+            mockUserManager = new Mock<UserManager<IdentityUser>>(
                 Mock.Of<IUserStore<IdentityUser>>(),
                 null,
                 null,
@@ -26,7 +26,7 @@ namespace FishingMania.Services.Test
                 null,
                 null);
 
-            _userService = new UserService(_mockUserManager.Object);
+            userService = new UserService(mockUserManager.Object);
         }
  
         
@@ -36,9 +36,9 @@ namespace FishingMania.Services.Test
             
             var userId = "1";
             var user = new IdentityUser { Id = userId };
-            _mockUserManager.Setup(um => um.FindByIdAsync(userId)).ReturnsAsync(user);
+            mockUserManager.Setup(um => um.FindByIdAsync(userId)).ReturnsAsync(user);
             
-            var result = await _userService.UserExistsByIdAsync(userId);
+            var result = await userService.UserExistsByIdAsync(userId);
           
             Assert.IsTrue(result);
         }
@@ -47,9 +47,9 @@ namespace FishingMania.Services.Test
         public async Task UserExistsByIdAsyncFalse()
         {
             var userId = "1";
-            _mockUserManager.Setup(um => um.FindByIdAsync(userId)).ReturnsAsync((IdentityUser)null);
+            mockUserManager.Setup(um => um.FindByIdAsync(userId)).ReturnsAsync((IdentityUser)null);
 
-            var result = await _userService.UserExistsByIdAsync(userId);
+            var result = await userService.UserExistsByIdAsync(userId);
 
             Assert.IsFalse(result);
         }
@@ -60,11 +60,11 @@ namespace FishingMania.Services.Test
             var userId = "1";
             var roleName = "Admin";
             var user = new IdentityUser { Id = userId };
-            _mockUserManager.Setup(um => um.FindByIdAsync(userId)).ReturnsAsync(user);
-            _mockUserManager.Setup(um => um.IsInRoleAsync(user, roleName)).ReturnsAsync(false);
-            _mockUserManager.Setup(um => um.AddToRoleAsync(user, roleName)).ReturnsAsync(IdentityResult.Success);
+            mockUserManager.Setup(um => um.FindByIdAsync(userId)).ReturnsAsync(user);
+            mockUserManager.Setup(um => um.IsInRoleAsync(user, roleName)).ReturnsAsync(false);
+            mockUserManager.Setup(um => um.AddToRoleAsync(user, roleName)).ReturnsAsync(IdentityResult.Success);
 
-            var result = await _userService.AssignUserToRoleAsync(userId, roleName);
+            var result = await userService.AssignUserToRoleAsync(userId, roleName);
 
             Assert.IsTrue(result);
         }
@@ -76,12 +76,12 @@ namespace FishingMania.Services.Test
             var userId = "1";
             var roleName = "Admin";
             var user = new IdentityUser { Id = userId };
-            _mockUserManager.Setup(um => um.FindByIdAsync(userId)).ReturnsAsync(user);
-            _mockUserManager.Setup(um => um.IsInRoleAsync(user, roleName)).ReturnsAsync(false);
-            _mockUserManager.Setup(um => um.AddToRoleAsync(user, roleName)).ReturnsAsync(IdentityResult.Failed());
+            mockUserManager.Setup(um => um.FindByIdAsync(userId)).ReturnsAsync(user);
+            mockUserManager.Setup(um => um.IsInRoleAsync(user, roleName)).ReturnsAsync(false);
+            mockUserManager.Setup(um => um.AddToRoleAsync(user, roleName)).ReturnsAsync(IdentityResult.Failed());
 
       
-            var result = await _userService.AssignUserToRoleAsync(userId, roleName);
+            var result = await userService.AssignUserToRoleAsync(userId, roleName);
 
             Assert.IsFalse(result);
         }
@@ -93,10 +93,10 @@ namespace FishingMania.Services.Test
             var userId = "1";
             var roleName = "Admin";
             var user = new IdentityUser { Id = userId };
-            _mockUserManager.Setup(um => um.FindByIdAsync(userId)).ReturnsAsync(user);
-            _mockUserManager.Setup(um => um.IsInRoleAsync(user, roleName)).ReturnsAsync(true);
+            mockUserManager.Setup(um => um.FindByIdAsync(userId)).ReturnsAsync(user);
+            mockUserManager.Setup(um => um.IsInRoleAsync(user, roleName)).ReturnsAsync(true);
 
-            var result = await _userService.AssignUserToRoleAsync(userId, roleName);
+            var result = await userService.AssignUserToRoleAsync(userId, roleName);
 
             Assert.IsTrue(result);
         }        
@@ -106,11 +106,11 @@ namespace FishingMania.Services.Test
             var userId = "1";
             var roleName = "Admin";
             var user = new IdentityUser { Id = userId };
-            _mockUserManager.Setup(um => um.FindByIdAsync(userId)).ReturnsAsync(user);
-            _mockUserManager.Setup(um => um.IsInRoleAsync(user, roleName)).ReturnsAsync(true);
-            _mockUserManager.Setup(um => um.RemoveFromRoleAsync(user, roleName)).ReturnsAsync(IdentityResult.Success);
+            mockUserManager.Setup(um => um.FindByIdAsync(userId)).ReturnsAsync(user);
+            mockUserManager.Setup(um => um.IsInRoleAsync(user, roleName)).ReturnsAsync(true);
+            mockUserManager.Setup(um => um.RemoveFromRoleAsync(user, roleName)).ReturnsAsync(IdentityResult.Success);
  
-            var result = await _userService.RemoveUserRoleAsync(userId, roleName);
+            var result = await userService.RemoveUserRoleAsync(userId, roleName);
 
             Assert.IsTrue(result);
         }
@@ -121,11 +121,11 @@ namespace FishingMania.Services.Test
             var userId = "1";
             var roleName = "Admin";
             var user = new IdentityUser { Id = userId };
-            _mockUserManager.Setup(um => um.FindByIdAsync(userId)).ReturnsAsync(user);
-            _mockUserManager.Setup(um => um.IsInRoleAsync(user, roleName)).ReturnsAsync(true);
-            _mockUserManager.Setup(um => um.RemoveFromRoleAsync(user, roleName)).ReturnsAsync(IdentityResult.Failed());
+            mockUserManager.Setup(um => um.FindByIdAsync(userId)).ReturnsAsync(user);
+            mockUserManager.Setup(um => um.IsInRoleAsync(user, roleName)).ReturnsAsync(true);
+            mockUserManager.Setup(um => um.RemoveFromRoleAsync(user, roleName)).ReturnsAsync(IdentityResult.Failed());
 
-            var result = await _userService.RemoveUserRoleAsync(userId, roleName);
+            var result = await userService.RemoveUserRoleAsync(userId, roleName);
 
             Assert.IsFalse(result);
         }
@@ -137,10 +137,10 @@ namespace FishingMania.Services.Test
             var userId = "1";
             var roleName = "Admin";
             var user = new IdentityUser { Id = userId };
-            _mockUserManager.Setup(um => um.FindByIdAsync(userId)).ReturnsAsync(user);
-            _mockUserManager.Setup(um => um.IsInRoleAsync(user, roleName)).ReturnsAsync(false);
+            mockUserManager.Setup(um => um.FindByIdAsync(userId)).ReturnsAsync(user);
+            mockUserManager.Setup(um => um.IsInRoleAsync(user, roleName)).ReturnsAsync(false);
 
-            var result = await _userService.RemoveUserRoleAsync(userId, roleName);
+            var result = await userService.RemoveUserRoleAsync(userId, roleName);
 
             Assert.IsTrue(result);
         }
@@ -150,10 +150,10 @@ namespace FishingMania.Services.Test
            
             var userId = "1";
             var user = new IdentityUser { Id = userId };
-            _mockUserManager.Setup(um => um.FindByIdAsync(userId)).ReturnsAsync(user);
-            _mockUserManager.Setup(um => um.DeleteAsync(user)).ReturnsAsync(IdentityResult.Success);
+            mockUserManager.Setup(um => um.FindByIdAsync(userId)).ReturnsAsync(user);
+            mockUserManager.Setup(um => um.DeleteAsync(user)).ReturnsAsync(IdentityResult.Success);
 
-            var result = await _userService.DeleteUserAsync(userId);
+            var result = await userService.DeleteUserAsync(userId);
 
             Assert.IsTrue(result);
         }
@@ -163,10 +163,10 @@ namespace FishingMania.Services.Test
           
             var userId = "1";
             var user = new IdentityUser { Id = userId };
-            _mockUserManager.Setup(um => um.FindByIdAsync(userId)).ReturnsAsync(user);
-            _mockUserManager.Setup(um => um.DeleteAsync(user)).ReturnsAsync(IdentityResult.Failed());
+            mockUserManager.Setup(um => um.FindByIdAsync(userId)).ReturnsAsync(user);
+            mockUserManager.Setup(um => um.DeleteAsync(user)).ReturnsAsync(IdentityResult.Failed());
 
-            var result = await _userService.DeleteUserAsync(userId);
+            var result = await userService.DeleteUserAsync(userId);
 
             Assert.IsFalse(result);
         }

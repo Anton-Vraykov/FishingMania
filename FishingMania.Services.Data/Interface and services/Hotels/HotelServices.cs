@@ -3,10 +3,8 @@
 using FishingMania.Data;
 using FishingMania.Data.Interface;
 using FishingMania.Data.Models;
-using FishingMania.Models;
 using FishingMania.Models.HotelModels;
 using FishingMania.Services.Data.Models.HotelModels;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 
@@ -99,6 +97,10 @@ namespace FishingMania.Services.Data.Interface_and_services.Hotels
                     UserId = g.UserId
                 })
                 .FirstOrDefaultAsync();
+            if(hotel == null)
+            {
+                throw new Exception("There is no hotel");
+            }
 
             return hotel;
         }
